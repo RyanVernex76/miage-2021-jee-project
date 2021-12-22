@@ -23,8 +23,8 @@ public class CamelRoutes extends RouteBuilder {
     @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.jmsPrefix")
     String jmsPrefix;
 
-    @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.vendorId")
-    Integer vendorId;
+    @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.carId")
+    Integer carId;
 
     @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.smtp.user")
     String smtpUser;
@@ -56,31 +56,14 @@ public class CamelRoutes extends RouteBuilder {
         camelContext.setTracing(true);
 
 
-        from("direct:cli")//
-                .marshal().json()//, "onBookedResponseReceived"
-                .to("jms:" + jmsPrefix + "booking?exchangePattern=InOut")//
-                .choice()
-                .when(header("success").isEqualTo(false))
-                .setBody(simple("not enough quota for this vendor"))
-                .bean(eCommerce, "showErrorMessage").stop()
-                .otherwise()
-                .unmarshal().json(Booking.class)
-                .bean(BookingResponseHandler)
-                .log("response received ${in.body}")
-                .bean(ticketingService, "fillTicketsWithCustomerInformations")
-                .split(body())
-                .marshal().json(ETicket.class)
-                .to("jms:" + jmsPrefix + "ticket?exchangePattern=InOut")
-                .choice()
-                .when(header("success").isEqualTo(false))
-                .bean(eCommerce, "showErrorMessage").stop()
-                .otherwise()
-                .bean(ticketingService, "notifyCreatedTicket");
+        from("direct:fare")//
+                .marshal().json()
+                .to("jms:" + jmsPrefix + "fare");
 
 
         from("jms:topic:" + jmsPrefix + "cancellation")
                 .log("cancellation notice ${body} ${headers}")
-                .filter(header("vendorId").isEqualTo(vendorId))
+                .filter(header("carId").isEqualTo(carId))
 
                 .unmarshal().json(CancelationNotice.class)
                 .process(new Processor() {

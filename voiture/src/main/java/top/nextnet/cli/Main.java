@@ -1,39 +1,46 @@
 package top.nextnet.cli;
 
-import fr.pantheonsorbonne.ufr27.miage.dto.Booking;
+import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
 import org.beryx.textio.TextIO;
 import org.beryx.textio.TextIoFactory;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import picocli.CommandLine.Command;
-import top.nextnet.service.BookingGateway;
+import top.nextnet.service.CarGateway;
 
 
 import javax.inject.Inject;
+import java.util.Date;
 
 @Command(name = "greeting", mixinStandardHelpOptions = true)
 public class Main implements Runnable {
 
 
     @Inject
-    UserInterfaceCLI eCommerce;
+    UserInterfaceCLI carInterface;
 
     @Inject
-    BookingGateway bookingGateway;
+    CarGateway carGateway;
+
+    @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.carId")
+    Integer carId;
 
     @Override
     public void run() {
 
 
         TextIO textIO = TextIoFactory.getTextIO();
-        eCommerce.accept(textIO, new RunnerData(""));
+        carInterface.accept(textIO, new RunnerData(""));
 
 
         while (true) {
             try {
-                eCommerce.displayAvailableGigsToCli();
-                Booking booking = eCommerce.getBookingFromOperator();
-                bookingGateway.sendBookingOrder(booking.getStandingTicketsNumber(), booking.getSeatingTicketsNumber(), booking.getVenueId());
+                int passengerId = carInterface.checkIdentity();
+                String dest = carInterface.getAddressDestination();
+
+                carGateway.sendFareToGreenCab(new Fare(0.0, new Date(), passengerId, carId));
+
             } catch (Exception e) {
-                eCommerce.showErrorMessage(e.getMessage());
+                carInterface.showErrorMessage(e.getMessage());
             }
         }
 
