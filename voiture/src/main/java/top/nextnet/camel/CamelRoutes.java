@@ -1,21 +1,14 @@
 package top.nextnet.camel;
 
-import fr.pantheonsorbonne.ufr27.miage.dto.Booking;
-import fr.pantheonsorbonne.ufr27.miage.dto.CancelationNotice;
-import fr.pantheonsorbonne.ufr27.miage.dto.ETicket;
 import org.apache.camel.CamelContext;
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import top.nextnet.cli.UserInterface;
-import top.nextnet.service.TicketingService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.util.HashMap;
 
 @ApplicationScoped
 public class CamelRoutes extends RouteBuilder {
@@ -39,12 +32,6 @@ public class CamelRoutes extends RouteBuilder {
     String smtpPort;
 
     @Inject
-    top.nextnet.camel.handler.BookingResponseHandler BookingResponseHandler;
-
-    @Inject
-    TicketingService ticketingService;
-
-    @Inject
     UserInterface eCommerce;
 
     @Inject
@@ -60,8 +47,16 @@ public class CamelRoutes extends RouteBuilder {
                 .marshal().json()
                 .to("jms:" + jmsPrefix + "fare");
 
+        from("direct:available")//
+                .marshal().json()
+                .to("jms:" + jmsPrefix + "carAvailable");
 
-        from("jms:topic:" + jmsPrefix + "cancellation")
+        from("direct:recharge")//
+                .marshal().json()
+                .to("jms:" + jmsPrefix + "carRecharge");
+
+
+        /*from("jms:topic:" + jmsPrefix + "cancellation")
                 .log("cancellation notice ${body} ${headers}")
                 .filter(header("carId").isEqualTo(carId))
 
@@ -81,7 +76,7 @@ public class CamelRoutes extends RouteBuilder {
                 })
                 .log("cancellation notice ${body} ${headers}")
                 .to("smtps:" + smtpHost + ":" + smtpPort + "?username=" + smtpUser + "&password=" + smtpPassword + "&contentType=")
-                .bean(eCommerce, "showErrorMessage");
+                .bean(eCommerce, "showErrorMessage");*/
 
 
     }

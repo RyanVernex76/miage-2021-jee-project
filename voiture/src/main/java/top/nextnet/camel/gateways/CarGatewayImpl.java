@@ -1,6 +1,7 @@
 package top.nextnet.camel.gateways;
 
 import fr.pantheonsorbonne.ufr27.miage.dto.CarAvailable;
+import fr.pantheonsorbonne.ufr27.miage.dto.CarRecharge;
 import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
@@ -33,8 +34,12 @@ public class CarGatewayImpl implements CarGateway {
     }
 
     @Override
-    public void needRecharge() {
-
+    public void notifyRecharge(boolean recharge) {
+        try(ProducerTemplate producer = context.createProducerTemplate()){
+            producer.sendBody("direct:recharge", new CarRecharge(carId, recharge));
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
