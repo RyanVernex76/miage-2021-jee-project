@@ -42,7 +42,7 @@ public class TicketGateway {
 
     public void cancelTicket(Ticket eticket) {
         try (ProducerTemplate producerTemplate = camelContext.createProducerTemplate()) {
-            producerTemplate.sendBodyAndHeader("direct:ticketCancel", new CancelationNotice(eticket.getIdCustomer().getEmail(), eticket.getId()), "vendorId", eticket.getIdVendor().getId());
+            producerTemplate.sendBodyAndHeader("direct:ticketCancel", new CancelationNotice(eticket.getIdCustomer().getEmail(), eticket.getId()), "carId", eticket.getIdVendor().getId());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
