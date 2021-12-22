@@ -29,25 +29,8 @@ public class UserInterfaceCLIImpl implements UserInterfaceCLI {
     TextTerminal<?> terminal;
     TextIO textIO;
 
-    @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.vendorId")
-    Integer vendorId;
-
-    public void displayAvailableGigsToCli(){
-        terminal.println("VendorId="+vendorId);
-        for (Gig gig : vendorService.getGigs(vendorId)) {
-            terminal.println("[" + gig.getVenueId() + "] " + gig.getArtistName() + " " + gig.getDate().format(DateTimeFormatter.ISO_DATE) + " " + gig.getLocation());
-        }
-    }
-
-    public Booking getBookingFromOperator(){
-        terminal.println("Which Gig to book?");
-
-        Integer venueId = textIO.newIntInputReader().withPossibleValues(vendorService.getGigs(vendorId).stream().map(g -> g.getVenueId()).collect(Collectors.toList())).read("Which venue?");
-        Integer sittingCount = textIO.newIntInputReader().read("How many seats?");
-        Integer standingCount = textIO.newIntInputReader().read("How many pit tickets?");
-
-        return new Booking(vendorId,venueId,standingCount,sittingCount);
-    }
+    @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.carId")
+    Integer carId;
 
     @Override
     public void accept(TextIO textIO, RunnerData runnerData) {
@@ -71,23 +54,25 @@ public class UserInterfaceCLIImpl implements UserInterfaceCLI {
 
 
     @Override
-    public String getCustomerFirstName() {
-        return this.textIO.newStringInputReader().read("Customer First Name");
-
-    }
-
-    @Override
-    public String getCustomerLastName() {
-        return this.textIO.newStringInputReader().read("Customer Last Name");
-
-    }
-
-    @Override
     public String getCustomerEmail() {
         return this.textIO.newStringInputReader().read("Customer Email");
 
     }
 
+    @Override
+    public boolean checkIdentity() {
+        terminal.println("Please scan the QR Code GreenCab sent yoy for this fare.");
+
+
+        return false;
+    }
+
+    @Override
+    public String getAddressDestination() {
+        terminal.println("Where do you want to go ?");
+
+        return textIO.newStringInputReader().read("Passenger Email");
+    }
 
 
 }
