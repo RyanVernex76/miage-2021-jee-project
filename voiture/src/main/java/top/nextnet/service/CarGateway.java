@@ -7,5 +7,9 @@ public interface CarGateway {
 
     void notifyRecharge(boolean recharge);
 
+    int [] getDistanceAndDurationFare(String origin, String dest);
+
+    double getPriceFare();
+
     void sendFareToGreenCab(Fare fare);
 }

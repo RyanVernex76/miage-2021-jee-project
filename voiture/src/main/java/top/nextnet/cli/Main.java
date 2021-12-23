@@ -36,8 +36,9 @@ public class Main implements Runnable {
             try {
                 int passengerId = carInterface.checkIdentity();
                 String dest = carInterface.getAddressDestination();
+                int infosFare[] = carGateway.getDistanceAndDurationFare("12 Avenue Condorcet 91200 Athis-Mons", dest);
 
-                carGateway.sendFareToGreenCab(new Fare(0.0, new Date(), passengerId, carId));
+                carGateway.sendFareToGreenCab(new Fare(infosFare[0], new Date(), passengerId, carId));
 
             } catch (Exception e) {
                 carInterface.showErrorMessage(e.getMessage());

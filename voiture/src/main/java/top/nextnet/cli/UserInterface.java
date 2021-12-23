@@ -1,7 +1,5 @@
 package top.nextnet.cli;
 
-import fr.pantheonsorbonne.ufr27.miage.dto.Booking;
-
 public interface UserInterface {
     void showErrorMessage(String errorMessage);
 
@@ -9,7 +7,7 @@ public interface UserInterface {
 
     String getCustomerEmail();
 
-    boolean checkIdentity();
+    int checkIdentity();
 
     String getAddressDestination();
 

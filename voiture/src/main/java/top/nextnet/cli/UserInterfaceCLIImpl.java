@@ -1,9 +1,6 @@
 package top.nextnet.cli;
 
 
-import fr.pantheonsorbonne.ufr27.miage.dto.Booking;
-import fr.pantheonsorbonne.ufr27.miage.dto.Gig;
-
 import org.beryx.textio.TextIO;
 import org.beryx.textio.TextTerminal;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -14,8 +11,6 @@ import top.nextnet.resource.VendorService;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.awt.*;
-import java.time.format.DateTimeFormatter;
-import java.util.stream.Collectors;
 
 
 @ApplicationScoped
@@ -60,18 +55,32 @@ public class UserInterfaceCLIImpl implements UserInterfaceCLI {
     }
 
     @Override
-    public boolean checkIdentity() {
-        terminal.println("Please scan the QR Code GreenCab sent yoy for this fare.");
+    public int checkIdentity() {
+        terminal.println("Please scan the QR Code GreenCab sent you for this fare.");
 
 
-        return false;
+        return this.textIO.newIntInputReader().read("passengerId");
+    }
+
+    public void traveling(){
+        try {
+            terminal.println("**** OK the fare will start in a few seconds ****\n" +
+                    "**** Please make yourself confortable ****\n");
+            Thread.sleep(5000);
+            terminal.println("**** We will arrive soon ****");
+            Thread.sleep(5000);
+            terminal.println("**** We arrived at destination ****\n");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     public String getAddressDestination() {
         terminal.println("Where do you want to go ?");
 
-        return textIO.newStringInputReader().read("Passenger Email");
+        return textIO.newStringInputReader().read("Destination");
     }
 
 
