@@ -9,7 +9,6 @@ import top.nextnet.service.CarGateway;
 
 
 import javax.inject.Inject;
-import java.util.Date;
 
 @Command(name = "greeting", mixinStandardHelpOptions = true)
 public class Main implements Runnable {
@@ -37,8 +36,11 @@ public class Main implements Runnable {
                 int passengerId = carInterface.checkIdentity();
                 String dest = carInterface.getAddressDestination();
                 int infosFare[] = carGateway.getDistanceAndDurationFare("12 Avenue Condorcet 91200 Athis-Mons", dest);
+                carInterface.showInfoMessage("Destination is " + infosFare[0] + "km away." + "\nWe will be arriving in " + infosFare[1] + " minutes.");
+                Fare f = new Fare(infosFare[0], passengerId, carId);
+                carInterface.showInfoMessage("Price of this fare is " + f.getPrice() + "€. GreenCab will charge you in a few minutes.\n Have a nice day !");
+                carGateway.sendFareToGreenCab(f);
 
-                carGateway.sendFareToGreenCab(new Fare(infosFare[0], passengerId, carId));
 
             } catch (Exception e) {
                 carInterface.showErrorMessage(e.getMessage());

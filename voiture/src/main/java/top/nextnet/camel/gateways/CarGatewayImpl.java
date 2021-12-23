@@ -2,7 +2,6 @@ package top.nextnet.camel.gateways;
 
 import com.google.maps.errors.ApiException;
 import fr.pantheonsorbonne.ufr27.miage.dto.CarAvailable;
-import fr.pantheonsorbonne.ufr27.miage.dto.CarRecharge;
 import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
@@ -41,21 +40,24 @@ public class CarGatewayImpl implements CarGateway {
     }
 
     @Override
-    public void notifyRecharge(boolean recharge) {
+    public void notifyRecharge() {
         try(ProducerTemplate producer = context.createProducerTemplate()){
-            producer.sendBody("direct:recharge", new CarRecharge(carId, recharge));
+            producer.sendBody("direct:recharge", carId);
         } catch (IOException e){
             e.printStackTrace();
         }
     }
 
     @Override
+    public boolean checkNeedRecharge() {
+        return false;
+    }
+
+    @Override
     public int [] getDistanceAndDurationFare(String origin, String dest) {
         try {
-            int [] infosFare = maps.getDistanceAndDuration(origin, dest);
-            carInterface.showSuccessMessage("Destination is " + infosFare[0] + "km away." +
-                    "We will be arriving in " + infosFare[1] + "minutes.");
-            return infosFare;
+
+            return maps.getDistanceAndDuration(origin, dest);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

@@ -41,6 +41,13 @@ public class UserInterfaceCLIImpl implements UserInterfaceCLI {
     }
 
     @Override
+    public void showInfoMessage(String infoMessage) {
+        terminal.getProperties().setPromptColor(Color.YELLOW);
+        terminal.println(infoMessage);
+        terminal.getProperties().setPromptColor(Color.white);
+    }
+
+    @Override
     public void showSuccessMessage(String s) {
         terminal.getProperties().setPromptColor(Color.GREEN);
         terminal.println(s);
