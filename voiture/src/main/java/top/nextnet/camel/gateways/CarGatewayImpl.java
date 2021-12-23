@@ -7,6 +7,8 @@ import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import top.nextnet.cli.UserInterface;
+import top.nextnet.dao.CarDao;
+import top.nextnet.exception.CarNotFoundException;
 import top.nextnet.resource.GoogleMapService;
 import top.nextnet.service.CarGateway;
 
@@ -24,10 +26,16 @@ public class CarGatewayImpl implements CarGateway {
     GoogleMapService maps;
 
     @Inject
+    CarDao carDao;
+
+    @Inject
     UserInterface carInterface;
 
     @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.carId")
     Integer carId;
+
+    @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.carRechargeMarge")
+    Integer margeRecharge;
 
 
     @Override
@@ -49,8 +57,8 @@ public class CarGatewayImpl implements CarGateway {
     }
 
     @Override
-    public boolean checkNeedRecharge() {
-        return false;
+    public boolean checkNeedRecharge() throws CarNotFoundException {
+        return carDao.getCurrentKm(carId) + margeRecharge > carDao.getMaxKmBeforeRecharge(carId);
     }
 
     @Override

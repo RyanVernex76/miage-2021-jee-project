@@ -2,10 +2,12 @@ package top.nextnet.dao;
 
 import top.nextnet.exception.CarNotFoundException;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
+@ApplicationScoped
 public class CarDaoImpl implements CarDao{
 
     @PersistenceContext(name="mysql")

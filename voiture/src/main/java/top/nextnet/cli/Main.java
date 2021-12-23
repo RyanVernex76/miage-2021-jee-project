@@ -40,6 +40,11 @@ public class Main implements Runnable {
                 Fare f = new Fare(infosFare[0], passengerId, carId);
                 carInterface.showInfoMessage("Price of this fare is " + f.getPrice() + "€. GreenCab will charge you in a few minutes.\n Have a nice day !");
                 carGateway.sendFareToGreenCab(f);
+                if(carGateway.checkNeedRecharge()){
+                    carGateway.notifyRecharge();
+                    carInterface.showErrorMessage("This car needs a recharge.");
+                    break;
+                }
 
 
             } catch (Exception e) {

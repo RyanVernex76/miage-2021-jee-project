@@ -64,7 +64,7 @@ public class UserInterfaceCLIImpl implements UserInterfaceCLI {
     @Override
     public int checkIdentity() {
         terminal.println("Please scan the QR Code GreenCab sent you for this fare.");
-
+        // Add QR Code checks
 
         return this.textIO.newIntInputReader().read("passengerId");
     }
