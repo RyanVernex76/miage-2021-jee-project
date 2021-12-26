@@ -1,5 +1,8 @@
 package top.nextnet.cli;
 
+import top.nextnet.exception.CarNotFoundException;
+import top.nextnet.model.Car;
+
 public interface UserInterface {
     void showErrorMessage(String errorMessage);
 
@@ -7,11 +10,12 @@ public interface UserInterface {
 
     void showInfoMessage(String infoMessage);
 
-
-    String getCustomerEmail();
+    void showCarState(Car c);
 
     int checkIdentity();
 
     String getAddressDestination();
+
+    Car connexionCar() throws CarNotFoundException;
 
 }

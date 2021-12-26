@@ -1,13 +1,10 @@
 package top.nextnet.cli;
 
-
 import org.beryx.textio.TextIO;
 import org.beryx.textio.TextTerminal;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.eclipse.microprofile.rest.client.inject.RestClient;
-import top.nextnet.resource.VendorService;
-
-
+import top.nextnet.exception.CarNotFoundException;
+import top.nextnet.model.Car;
+import top.nextnet.service.CarGateway;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.awt.*;
@@ -16,16 +13,12 @@ import java.awt.*;
 @ApplicationScoped
 public class UserInterfaceCLIImpl implements UserInterfaceCLI {
 
-    @Inject
-    @RestClient
-    VendorService vendorService;
-
 
     TextTerminal<?> terminal;
     TextIO textIO;
 
-    @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.carId")
-    Integer carId;
+    @Inject
+    CarGateway carGateway;
 
     @Override
     public void accept(TextIO textIO, RunnerData runnerData) {
@@ -48,17 +41,17 @@ public class UserInterfaceCLIImpl implements UserInterfaceCLI {
     }
 
     @Override
+    public void showCarState(Car c) {
+        String msg = "Autonomous car n°"+ c.getId() + "" +
+                "\nKilometers before recharge : " + (c.getMaxKm() - c.getCurrentKm());
+        showInfoMessage(msg);
+    }
+
+    @Override
     public void showSuccessMessage(String s) {
         terminal.getProperties().setPromptColor(Color.GREEN);
         terminal.println(s);
         terminal.getProperties().setPromptColor(Color.white);
-    }
-
-
-    @Override
-    public String getCustomerEmail() {
-        return this.textIO.newStringInputReader().read("Customer Email");
-
     }
 
     @Override
@@ -88,6 +81,13 @@ public class UserInterfaceCLIImpl implements UserInterfaceCLI {
         terminal.println("Where do you want to go ?");
 
         return textIO.newStringInputReader().read("Destination");
+    }
+
+    @Override
+    public Car connexionCar() throws CarNotFoundException {
+        terminal.println("Please enter the id of the car you want to use (number)");
+        int id = textIO.newIntInputReader().read("ID");
+        return carGateway.getCar(id);
     }
 
 

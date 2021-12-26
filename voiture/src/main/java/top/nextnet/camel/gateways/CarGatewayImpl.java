@@ -6,9 +6,9 @@ import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import top.nextnet.cli.UserInterface;
 import top.nextnet.dao.CarDao;
 import top.nextnet.exception.CarNotFoundException;
+import top.nextnet.model.Car;
 import top.nextnet.resource.GoogleMapService;
 import top.nextnet.service.CarGateway;
 
@@ -28,18 +28,9 @@ public class CarGatewayImpl implements CarGateway {
     @Inject
     CarDao carDao;
 
-    @Inject
-    UserInterface carInterface;
-
-    @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.carId")
-    Integer carId;
-
-    @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.carRechargeMarge")
-    Integer margeRecharge;
-
 
     @Override
-    public void notifyAvailability(boolean available) {
+    public void notifyAvailability(int carId, boolean available) {
         try(ProducerTemplate producer = context.createProducerTemplate()){
             producer.sendBody("direct:available", new CarAvailable(carId, available));
         } catch (IOException e){
@@ -48,7 +39,7 @@ public class CarGatewayImpl implements CarGateway {
     }
 
     @Override
-    public void notifyRecharge() {
+    public void notifyRecharge(int carId) {
         try(ProducerTemplate producer = context.createProducerTemplate()){
             producer.sendBody("direct:recharge", carId);
         } catch (IOException e){
@@ -57,8 +48,8 @@ public class CarGatewayImpl implements CarGateway {
     }
 
     @Override
-    public boolean checkNeedRecharge() throws CarNotFoundException {
-        return carDao.getCurrentKm(carId) + margeRecharge > carDao.getMaxKmBeforeRecharge(carId);
+    public boolean checkNeedRecharge(int carId) throws CarNotFoundException {
+        return carDao.getCurrentKm(carId) > carDao.getMaxKmBeforeRecharge(carId);
     }
 
     @Override
@@ -77,18 +68,16 @@ public class CarGatewayImpl implements CarGateway {
     }
 
     @Override
-    public double getPriceFare() {
-        return 0;
-    }
-
-
-
-    @Override
     public void sendFareToGreenCab(Fare fare) {
         try(ProducerTemplate producer = context.createProducerTemplate()){
             producer.sendBody("direct:fare", fare);
         } catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Car getCar(int carId) throws CarNotFoundException {
+        return carDao.getCar(carId);
     }
 }

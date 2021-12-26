@@ -2,17 +2,18 @@ package top.nextnet.service;
 
 import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
 import top.nextnet.exception.CarNotFoundException;
+import top.nextnet.model.Car;
 
 public interface CarGateway {
-    void notifyAvailability(boolean available);
+    void notifyAvailability(int carId, boolean available);
 
-    void notifyRecharge();
+    void notifyRecharge(int carId);
 
-    boolean checkNeedRecharge() throws CarNotFoundException;
+    boolean checkNeedRecharge(int carId) throws CarNotFoundException;
 
     int [] getDistanceAndDurationFare(String origin, String dest);
 
-    double getPriceFare();
-
     void sendFareToGreenCab(Fare fare);
+
+    Car getCar(int carId) throws CarNotFoundException;
 }
