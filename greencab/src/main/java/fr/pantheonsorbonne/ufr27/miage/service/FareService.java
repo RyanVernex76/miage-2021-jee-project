@@ -2,9 +2,10 @@ package fr.pantheonsorbonne.ufr27.miage.service;
 
 
 import fr.pantheonsorbonne.ufr27.miage.dto.Booking;
+import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
 import fr.pantheonsorbonne.ufr27.miage.exception.UnsuficientQuotaForVenueException;
 
-public interface BookingService {
+public interface FareService {
 
-    Booking book(Booking booking) throws UnsuficientQuotaForVenueException;
+    Fare register(Fare fare);
 }
