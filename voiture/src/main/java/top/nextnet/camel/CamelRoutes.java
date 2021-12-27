@@ -1,12 +1,12 @@
 package top.nextnet.camel;
 
+import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-import top.nextnet.cli.UserInterface;
-
+import top.nextnet.camel.handler.FareHandler;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -16,23 +16,8 @@ public class CamelRoutes extends RouteBuilder {
     @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.jmsPrefix")
     String jmsPrefix;
 
-    @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.carId")
-    Integer carId;
-
-    @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.smtp.user")
-    String smtpUser;
-
-    @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.smtp.password")
-    String smtpPassword;
-
-    @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.smtp.host")
-    String smtpHost;
-
-    @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.smtp.port")
-    String smtpPort;
-
     @Inject
-    UserInterface eCommerce;
+    FareHandler fareHandler;
 
     @Inject
     CamelContext camelContext;
@@ -45,7 +30,10 @@ public class CamelRoutes extends RouteBuilder {
 
         from("direct:fare")//
                 .marshal().json()
-                .to("jms:" + jmsPrefix + "fare");
+                .to("jms:" + jmsPrefix + "fare")
+                .unmarshal().json(Fare.class)
+                .bean(fareHandler)
+                ;
 
         from("direct:available")//
                 .marshal().json()

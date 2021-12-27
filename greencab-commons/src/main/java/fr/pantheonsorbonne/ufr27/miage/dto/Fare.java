@@ -12,6 +12,8 @@ public class Fare {
     int passengerId;
     int carId;
 
+    public Fare(){}
+
     public Fare(int distance, int passengerId, int carId) {
         this.distance = distance;
         this.date = new Date();

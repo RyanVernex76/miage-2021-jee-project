@@ -62,6 +62,7 @@ public class UserInterfaceCLIImpl implements UserInterfaceCLI {
         return this.textIO.newIntInputReader().read("passengerId");
     }
 
+    @Override
     public void traveling(){
         try {
             terminal.println("**** OK the fare will start in a few seconds ****\n" +

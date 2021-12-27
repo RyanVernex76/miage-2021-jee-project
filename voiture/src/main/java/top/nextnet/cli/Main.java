@@ -39,6 +39,7 @@ public class Main implements Runnable {
                     int infosFare[] = carGateway.getDistanceAndDurationFare("12 Avenue Condorcet 91200 Athis-Mons", dest);
                     carInterface.showInfoMessage("Destination is " + infosFare[0] + "km away." + "\nWe will be arriving in " + infosFare[1] + " minutes.");
                     Fare f = new Fare(infosFare[0], passengerId, c.getId());
+                    carInterface.traveling();
                     carGateway.sendFareToGreenCab(f);
                     carInterface.showInfoMessage("Price of this fare is " + f.getPrice() + "€. GreenCab will charge you in a few minutes.\n Have a nice day !");
                     //update currentKm for car
@@ -47,7 +48,6 @@ public class Main implements Runnable {
                         carInterface.showErrorMessage("This car needs a recharge.");
                         break;
                     }
-                    carInterface.showCarState(c);
 
                 } catch (Exception e) {
                     carInterface.showErrorMessage(e.getMessage());
