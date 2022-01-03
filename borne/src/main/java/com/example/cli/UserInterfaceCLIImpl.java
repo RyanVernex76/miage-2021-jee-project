@@ -60,7 +60,7 @@ public class UserInterfaceCLIImpl implements UserInterfaceCLI{
 
         // Add Car ID check.
 
-        return this.textIO.newIntInputReader().read("passengerId");
+        return this.textIO.newIntInputReader().read("carId");
     }
 
     @Override
