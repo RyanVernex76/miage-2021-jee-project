@@ -22,6 +22,10 @@ public class CamelRoutes extends RouteBuilder {
     public void configure() throws Exception {
         camelContext.setTracing(true);
 
+        from("direct:invoice")
+                .marshal().json()
+                        .to("jms:" + jmsPrefix + "invoice");
+
         from("direct:available")
                 .marshal().json()
                 .to("jms:" + jmsPrefix + "juicerAvailable");
