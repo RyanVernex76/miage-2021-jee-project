@@ -1,8 +1,10 @@
 package fr.pantheonsorbonne.ufr27.miage.service;
 
 import fr.pantheonsorbonne.ufr27.miage.dao.PassengerDAO;
-import fr.pantheonsorbonne.ufr27.miage.exception.PassengerNotFoundException;
 
+import fr.pantheonsorbonne.ufr27.miage.exception.PassengerNotFoundException;
+import fr.pantheonsorbonne.ufr27.miage.dto.PassengerDTO;
+import fr.pantheonsorbonne.ufr27.miage.exception.PassengerAlreadyExistException;
 import javax.inject.Inject;
 
 public class PassengerServiceImpl implements PassengerService {
@@ -20,8 +22,15 @@ public class PassengerServiceImpl implements PassengerService {
         return null;
     }
 
+
     @Override
-    public void addNewPassenger() {
+    public void  addNewPassenger(PassengerDTO passengerDTO) throws PassengerAlreadyExistException {
+
+        if (!passengerDAO.numberPassengerWithEmail(passengerDTO.getEmail()).equals(0)) {
+
+            throw new PassengerAlreadyExistException();
+        }
+        passengerDAO.createNewPassenger(passengerDTO);
 
     }
 }

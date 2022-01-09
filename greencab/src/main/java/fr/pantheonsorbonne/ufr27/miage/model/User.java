@@ -24,6 +24,19 @@ public class User {
     @Column(name = "password", length = 50)
     private String password;
 
+    public User(String first_name, String last_name, String phone, String email, String password)
+    {
+        this.firstName = first_name;
+        this.lastName = last_name;
+        this.phone = phone;
+        this.emailAddress = email;
+        this.password = password;
+    }
+
+    public User() {
+
+    }
+
     public String getPassword() {
         return password;
     }
