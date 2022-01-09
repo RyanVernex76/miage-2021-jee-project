@@ -10,6 +10,14 @@ public class Passenger {
     @Column(name = "user_id", nullable = false)
     private Integer id;
 
+    public Passenger(Integer id){
+        this.id = id;
+    }
+
+    public Passenger() {
+
+    }
+
     public Integer getId() {
         return id;
     }
