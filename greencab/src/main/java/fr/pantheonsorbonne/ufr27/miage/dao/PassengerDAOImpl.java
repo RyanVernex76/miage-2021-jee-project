@@ -1,4 +1,5 @@
 package fr.pantheonsorbonne.ufr27.miage.dao;
+import fr.pantheonsorbonne.ufr27.miage.dto.ConnectionDTO;
 import fr.pantheonsorbonne.ufr27.miage.exception.PassengerNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.model.Passenger;
 import fr.pantheonsorbonne.ufr27.miage.model.User;
@@ -17,11 +18,11 @@ public class PassengerDAOImpl implements PassengerDAO {
     EntityManager em;
 
     @Override
-    public User findMatchingPassenger(String email,String pwd) throws  PassengerNotFoundException {
+    public User findMatchingPassenger(ConnectionDTO connectionDTO) throws  PassengerNotFoundException {
         try {
             Query q = em.createQuery("Select u from User u inner join Passenger p on u.id = p.id where u.emailAddress =:email and u.password =:pwd");
-            q.setParameter("email", email);
-            q.setParameter("pwd", pwd);
+            q.setParameter("email", connectionDTO.getEmail());
+            q.setParameter("pwd", connectionDTO.getPassword());
             q.getSingleResult();
             User u = (User) q;
             return u;

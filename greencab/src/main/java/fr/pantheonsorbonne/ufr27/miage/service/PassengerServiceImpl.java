@@ -2,6 +2,7 @@ package fr.pantheonsorbonne.ufr27.miage.service;
 
 import fr.pantheonsorbonne.ufr27.miage.dao.PassengerDAO;
 
+import fr.pantheonsorbonne.ufr27.miage.dto.ConnectionDTO;
 import fr.pantheonsorbonne.ufr27.miage.exception.PassengerNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.dto.PassengerDTO;
 import fr.pantheonsorbonne.ufr27.miage.exception.PassengerAlreadyExistException;
@@ -13,9 +14,9 @@ public class PassengerServiceImpl implements PassengerService {
     PassengerDAO passengerDAO;
 
     @Override
-    public Object connectPassenger(String email, String pwd) throws PassengerNotFoundException {
+    public Object connectPassenger(ConnectionDTO connectionDTO) throws PassengerNotFoundException {
         try {
-            passengerDAO.findMatchingPassenger(email,pwd);
+            passengerDAO.findMatchingPassenger(connectionDTO);
         } catch (PassengerNotFoundException e) {
            throw e;
         }

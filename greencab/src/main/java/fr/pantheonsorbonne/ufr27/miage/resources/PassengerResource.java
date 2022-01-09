@@ -1,5 +1,6 @@
 package fr.pantheonsorbonne.ufr27.miage.resources;
 
+import fr.pantheonsorbonne.ufr27.miage.dto.ConnectionDTO;
 import fr.pantheonsorbonne.ufr27.miage.exception.PassengerNotFoundException;
 
 import fr.pantheonsorbonne.ufr27.miage.dto.PassengerDTO;
@@ -33,10 +34,9 @@ import javax.ws.rs.core.Response;
 
         @Path("")
         @GET
-        public Response connectPassenger(@QueryParam("email") String email,
-                                         @QueryParam("pwd") String pwd ) {
+        public Response connectPassenger(@QueryParam("connection") ConnectionDTO connectionDTO) {
            try {
-               return Response.status(200).entity(passengerService.connectPassenger(email,pwd)).build();
+               return Response.status(200).entity(passengerService.connectPassenger(connectionDTO)).build();
            } catch ( PassengerNotFoundException e){
                throw new WebApplicationException(404);
            }
