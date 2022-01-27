@@ -25,6 +25,9 @@ public class CamelRoutes extends RouteBuilder {
     FareGateway fareHandler;
 
     @Inject
+    CarGateway carHandler;
+
+    @Inject
     CamelContext camelContext;
 
     @Override
@@ -32,45 +35,23 @@ public class CamelRoutes extends RouteBuilder {
 
         camelContext.setTracing(true);
 
-        /*onException(ExpiredTransitionalTicketException.class)
-                .handled(true)
-                .process(new ExpiredTransitionalTicketProcessor())
-                .setHeader("success", simple("false"))
-                .log("Clearning expired transitional ticket ${body}")
-                .bean(ticketingService, "cleanUpTransitionalTicket");
-
-        onException(UnsuficientQuotaForVenueException.class)
-                .handled(true)
-                .setHeader("success", simple("false"))
-                .setBody(simple("Vendor has not enough quota for this venue"));
-
-
-        onException(NoSuchTicketException.class)
-                .handled(true)
-                .setHeader("success", simple("false"))
-                .setBody(simple("Ticket has expired"));
-
-        onException(CustomerNotFoundException.NoSeatAvailableException.class)
-                .handled(true)
-                .setHeader("success", simple("false"))
-                .setBody(simple("No seat is available"));
-
-         */
-
-
         from("jms:" + jmsPrefix + "fare")//
                 .log("fare received: ${in.headers}")//
                 .unmarshal().json(Fare.class)//
                 .bean(fareHandler, "register").marshal().json()
         ;
 
+        from("jms:" + jmsPrefix + "available")//
+                .log("car is available: ${in.headers}")//
+                .unmarshal().json(Fare.class)//
+                .bean(carHandler, "setAvailable").marshal().json()
+        ;
 
-        /*from("jms:" + jmsPrefix + "ticket?exchangePattern=InOut")
-                .unmarshal().json(ETicket.class)
-                .bean(ticketingService, "emitTicket").marshal().json();
-
-         */
-
+        from("jms:" + jmsPrefix + "recharge")//
+                .log("car need recharge: ${in.headers}")//
+                .unmarshal().json(Fare.class)//
+                .bean(carHandler, "notifyRecharge").marshal().json()
+        ;
 
         from("direct:ticketCancel")
                 .marshal().json()
