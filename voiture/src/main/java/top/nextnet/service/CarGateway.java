@@ -5,9 +5,9 @@ import top.nextnet.exception.CarNotFoundException;
 import top.nextnet.model.Car;
 
 public interface CarGateway {
-    void notifyAvailability(int carId, boolean available);
+    void notifyAvailability(int carId, String pos);
 
-    void notifyRecharge(int carId);
+    void notifyRecharge(int carId, String pos);
 
     boolean checkNeedRecharge(int carId) throws CarNotFoundException;
 

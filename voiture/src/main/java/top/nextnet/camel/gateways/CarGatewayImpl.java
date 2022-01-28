@@ -1,11 +1,10 @@
 package top.nextnet.camel.gateways;
 
 import com.google.maps.errors.ApiException;
-import fr.pantheonsorbonne.ufr27.miage.dto.CarAvailable;
+import fr.pantheonsorbonne.ufr27.miage.dto.CarPosition;
 import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import top.nextnet.dao.CarDao;
 import top.nextnet.exception.CarNotFoundException;
 import top.nextnet.model.Car;
@@ -30,18 +29,20 @@ public class CarGatewayImpl implements CarGateway {
 
 
     @Override
-    public void notifyAvailability(int carId, boolean available) {
+    public void notifyAvailability(int carId, String pos) {
         try(ProducerTemplate producer = context.createProducerTemplate()){
-            producer.sendBody("direct:available", new CarAvailable(carId, available));
+            producer.sendBody("direct:available",
+                    new CarPosition(carId, pos));
         } catch (IOException e){
             e.printStackTrace();
         }
     }
 
     @Override
-    public void notifyRecharge(int carId) {
+    public void notifyRecharge(int carId, String pos) {
         try(ProducerTemplate producer = context.createProducerTemplate()){
-            producer.sendBody("direct:recharge", carId);
+            producer.sendBody("direct:recharge",
+                    new CarPosition(carId, pos));
         } catch (IOException e){
             e.printStackTrace();
         }

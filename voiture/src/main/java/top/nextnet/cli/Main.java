@@ -44,10 +44,11 @@ public class Main implements Runnable {
                     carInterface.showInfoMessage("Price of this fare is " + f.getPrice() + "€. GreenCab will charge you in a few minutes.\n Have a nice day !");
                     //update currentKm for car
                     if(carGateway.checkNeedRecharge(c.getId())) {
-                        carGateway.notifyRecharge(c.getId());
+                        carGateway.notifyRecharge(c.getId(), dest);
                         carInterface.showErrorMessage("This car needs a recharge.");
                         break;
                     }
+                    carGateway.notifyAvailability(c.getId(), dest);
 
                 } catch (Exception e) {
                     carInterface.showErrorMessage(e.getMessage());
