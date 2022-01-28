@@ -1,6 +1,9 @@
 package top.nextnet.cli;
 
+import fr.pantheonsorbonne.ufr27.miage.dto.CarPosition;
 import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
+import org.apache.camel.CamelContext;
+import org.apache.camel.ProducerTemplate;
 import org.beryx.textio.TextIO;
 import org.beryx.textio.TextIoFactory;
 import picocli.CommandLine.Command;
@@ -11,52 +14,31 @@ import top.nextnet.service.CarGateway;
 
 
 import javax.inject.Inject;
+import java.io.IOException;
 
 @Command(name = "greeting", mixinStandardHelpOptions = true)
 public class Main implements Runnable {
 
-
     @Inject
-    UserInterfaceCLI carInterface;
-
-    @Inject
-    CarGateway carGateway;
+    CamelContext context;
 
     @Override
     public void run() {
 
 
-        TextIO textIO = TextIoFactory.getTextIO();
-        carInterface.accept(textIO, new RunnerData(""));
+        //TextIO textIO = TextIoFactory.getTextIO();
+        //carInterface.accept(textIO, new RunnerData(""));
+        this.testFare();
 
-        try {
-            Car c = carInterface.connexionCar();
-            carInterface.showCarState(c);
+    }
 
-            while (true) {
-                try {
-                    int passengerId = carInterface.checkIdentity();
-                    String dest = carInterface.getAddressDestination();
-                    FareInfo infos = carGateway.getDistanceAndDurationFare("12 Avenue Condorcet 91200 Athis-Mons", dest);
-                    carInterface.showInfoMessage("Destination is " + infos.getDistance() + "km away." + "\nWe will be arriving in " + infos.getDuration() + " minutes.");
-                    Fare f = new Fare(infos.getDistance(), passengerId, c.getId());
-                    carInterface.traveling();
-                    carGateway.sendFareToGreenCab(f);
-                    carInterface.showInfoMessage("Price of this fare is " + f.getPrice() + "€. GreenCab will charge you in a few minutes.\n Have a nice day !");
-                    //update currentKm for car
-                    if(carGateway.checkNeedRecharge(c.getId())) {
-                        carGateway.notifyRecharge(c.getId(), dest);
-                        carInterface.showErrorMessage("This car needs a recharge.");
-                        break;
-                    }
-                    carGateway.notifyAvailability(c.getId(), dest);
-
-                } catch (Exception e) {
-                    carInterface.showErrorMessage(e.getMessage());
-                }
-            }
-        } catch (CarNotFoundException e) {
-            carInterface.showErrorMessage(e.getMessage());
+    //ONLY FOR TEST - NEED TO REMOVE AFTER
+    public void testFare(){
+        try(ProducerTemplate producer = context.createProducerTemplate()){
+            producer.sendBody("direct:bookFare",
+                    new Fare("12 Avenue Condorcet Athis-Mons", 2));
+        } catch (IOException e){
+            e.printStackTrace();
         }
     }
 

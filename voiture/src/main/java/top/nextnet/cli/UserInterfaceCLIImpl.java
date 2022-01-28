@@ -55,11 +55,26 @@ public class UserInterfaceCLIImpl implements UserInterfaceCLI {
     }
 
     @Override
-    public int checkIdentity() {
+    public boolean checkIdentity(int passengerId) {
         terminal.println("Please scan the QR Code GreenCab sent you for this fare.");
         // Add QR Code checks
+        int i = 3;
+        int input = this.textIO.newIntInputReader().read("passengerId");
+        while((input != passengerId) && i > 0){
+            this.showErrorMessage("Wrong id ! ");
+            i--;
+            if(i!=0){
+                this.showErrorMessage("Please try again. You have " + i + "chance(s) left.");
+                input = this.textIO.newIntInputReader().read("passengerId");
+            }
 
-        return this.textIO.newIntInputReader().read("passengerId");
+        }
+        if(input != passengerId){
+            this.showErrorMessage("This was your last chance. This fare is canceled. Please contact Greencab fro further details");
+            return false;
+        }
+
+        return true;
     }
 
     @Override

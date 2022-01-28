@@ -12,7 +12,7 @@ public interface UserInterface {
 
     void showCarState(Car c);
 
-    int checkIdentity();
+    boolean checkIdentity(int passengerId);
 
     String getAddressDestination();
 

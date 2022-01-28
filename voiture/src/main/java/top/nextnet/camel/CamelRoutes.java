@@ -1,7 +1,10 @@
 package top.nextnet.camel;
 
+import fr.pantheonsorbonne.ufr27.miage.dto.Booking;
 import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
 import org.apache.camel.CamelContext;
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -27,21 +30,42 @@ public class CamelRoutes extends RouteBuilder {
     public void configure() throws Exception {
         camelContext.setTracing(true);
 
+        //ONLY FOR TEST - NEED TO REMOVE AFTER
+        from("direct:bookFare")
+                .log("booking sent by passenger")
+                .marshal().json()//
+                .to("jms:" + jmsPrefix + "bookFare");
 
+
+        // Receive fare and treat it
+        from("jms:" + jmsPrefix + "bookFare")//
+                .log("fare received: ${in.headers}")//
+                .unmarshal().json(Fare.class)//
+                .bean(fareHandler, "onFareReceived")
+        ;
+
+
+        //Send fare object to greenCab => Charge passenger
         from("direct:fare")//
-                .marshal().json()
-                .to("jms:" + jmsPrefix + "fare")
-                .unmarshal().json(Fare.class)
-                .bean(fareHandler)
+                .marshal().json()//
+                .to("jms:" + jmsPrefix + "fare")//
+                .unmarshal().json(Fare.class)//
+                .bean(fareHandler, "onFareSent")
                 ;
 
-        from("direct:available")//
+        //Send CarPosition object to greencab => set car as available and
+        // register its position
+        from("direct:available")
                 .marshal().json()
                 .to("jms:" + jmsPrefix + "carAvailable");
 
+        //Send CarPosition object to greencab => notify car need recharge and
+        // register its position
         from("direct:recharge")//
                 .marshal().json()
                 .to("jms:" + jmsPrefix + "carRecharge");
+
+
 
 
         /*from("jms:topic:" + jmsPrefix + "cancellation")
