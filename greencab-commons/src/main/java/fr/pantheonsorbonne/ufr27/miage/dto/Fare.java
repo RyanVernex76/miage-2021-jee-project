@@ -6,6 +6,8 @@ public class Fare {
 
     private static final double pricePerKm = 5.0;
 
+    String departure;
+    String destination;
     int distance;
     double price;
     Date date;
@@ -14,12 +16,34 @@ public class Fare {
 
     public Fare(){}
 
+    public Fare(String dep, int passengerId){
+        this.departure = dep;
+        this.passengerId = passengerId;
+        this.date = new Date();
+    }
+
     public Fare(int distance, int passengerId, int carId) {
         this.distance = distance;
         this.date = new Date();
         this.passengerId = passengerId;
         this.carId = carId;
         this.price = this.calculatePrice();
+    }
+
+    public String getDeparture() {
+        return departure;
+    }
+
+    public void setDeparture(String departure) {
+        this.departure = departure;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
     }
 
     public double getPrice() {

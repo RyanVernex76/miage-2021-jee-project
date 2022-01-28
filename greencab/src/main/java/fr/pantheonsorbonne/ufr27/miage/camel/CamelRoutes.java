@@ -35,18 +35,21 @@ public class CamelRoutes extends RouteBuilder {
 
         camelContext.setTracing(true);
 
+        // Receives fare from car => Charge passenger
         from("jms:" + jmsPrefix + "fare")//
                 .log("fare received: ${in.headers}")//
                 .unmarshal().json(Fare.class)//
                 .bean(fareHandler, "register").marshal().json()
         ;
 
+        // Receives CarPosition object => register available + latest position
         from("jms:" + jmsPrefix + "available")//
                 .log("car is available: ${in.headers}")//
                 .unmarshal().json(Fare.class)//
                 .bean(carHandler, "setAvailable").marshal().json()
         ;
 
+        // Receives CarPosition object => notify needRecharge + latest location
         from("jms:" + jmsPrefix + "recharge")//
                 .log("car need recharge: ${in.headers}")//
                 .unmarshal().json(Fare.class)//
