@@ -27,7 +27,13 @@ public class Fare {
         this.date = new Date();
         this.passengerId = passengerId;
         this.carId = carId;
-        this.price = this.calculatePrice();
+        this.calculatePrice();
+    }
+
+    public Fare(String dep, int passengerId, Date d){
+        this.departure = dep;
+        this.passengerId = passengerId;
+        this.date = d;
     }
 
     public String getDeparture() {
@@ -86,7 +92,7 @@ public class Fare {
         this.distance = distance;
     }
 
-    public double calculatePrice(){
-        return pricePerKm * this.distance;
+    public void calculatePrice(){
+        this.price = pricePerKm * this.distance;
     }
 }

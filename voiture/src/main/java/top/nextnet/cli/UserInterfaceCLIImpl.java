@@ -64,7 +64,7 @@ public class UserInterfaceCLIImpl implements UserInterfaceCLI {
             this.showErrorMessage("Wrong id ! ");
             i--;
             if(i!=0){
-                this.showErrorMessage("Please try again. You have " + i + "chance(s) left.");
+                this.showErrorMessage("Please try again. You have " + i + " chance(s) left.");
                 input = this.textIO.newIntInputReader().read("passengerId");
             }
 

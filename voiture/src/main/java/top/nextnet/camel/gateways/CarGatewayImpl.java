@@ -71,6 +71,8 @@ public class CarGatewayImpl implements CarGateway {
 
     @Override
     public void sendFareToGreenCab(Fare fare) {
+
+
         try(ProducerTemplate producer = context.createProducerTemplate()){
             producer.sendBody("direct:fare", fare);
         } catch (IOException e){

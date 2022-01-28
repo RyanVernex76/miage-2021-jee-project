@@ -1,16 +1,12 @@
 package top.nextnet.cli;
 
-import fr.pantheonsorbonne.ufr27.miage.dto.CarPosition;
 import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
-import org.beryx.textio.TextIO;
-import org.beryx.textio.TextIoFactory;
 import picocli.CommandLine.Command;
-import top.nextnet.exception.CarNotFoundException;
-import top.nextnet.model.Car;
-import top.nextnet.model.FareInfo;
-import top.nextnet.service.CarGateway;
+import top.nextnet.dao.FareWaitingDao;
+import top.nextnet.model.FareWaiting;
+import top.nextnet.service.FareService;
 
 
 import javax.inject.Inject;
@@ -22,14 +18,23 @@ public class Main implements Runnable {
     @Inject
     CamelContext context;
 
+    @Inject
+    FareService fareService;
+
+    @Inject
+    FareWaitingDao fareDao;
+
     @Override
     public void run() {
-
-
-        //TextIO textIO = TextIoFactory.getTextIO();
-        //carInterface.accept(textIO, new RunnerData(""));
         this.testFare();
 
+
+        FareWaiting f;
+        while (fareDao.hasNext()) {
+            f = fareDao.getFareWaiting();
+            fareService.handleFare(f);
+            fareDao.removeFareFromQueue(f);
+        }
     }
 
     //ONLY FOR TEST - NEED TO REMOVE AFTER

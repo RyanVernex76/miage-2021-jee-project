@@ -3,8 +3,9 @@ package top.nextnet.camel.handler;
 import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
 import org.apache.camel.Exchange;
 import top.nextnet.dao.CarDao;
+import top.nextnet.dao.FareWaitingDao;
 import top.nextnet.exception.CarNotFoundException;
-import top.nextnet.service.FareService;
+import top.nextnet.model.FareWaiting;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -15,8 +16,8 @@ public class FareHandler {
     @Inject
     CarDao carDao;
 
-    @Inject
-    FareService fareService;
+   @Inject
+    FareWaitingDao fareDao;
 
     public void onFareSent(Exchange exchange) throws CarNotFoundException {
         Fare f = exchange.getMessage().getBody(Fare.class);
@@ -24,10 +25,12 @@ public class FareHandler {
         carDao.updateCurrentKm(f.getCarId(), f.getDistance());
     }
 
-    public void onFareReceived(Exchange exchange) {
+    public void onFareReceived(Exchange exchange) throws InterruptedException {
         Fare f = exchange.getMessage().getBody(Fare.class);
 
-        this.fareService.handleFare(f);
+        FareWaiting fw = new FareWaiting(f.getPassengerId(), f.getDeparture(), f.getDate());
+
+        fareDao.insertFareToQueue(fw);
     }
 
 }

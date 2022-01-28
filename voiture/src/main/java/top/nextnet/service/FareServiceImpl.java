@@ -8,6 +8,7 @@ import top.nextnet.cli.UserInterfaceCLI;
 import top.nextnet.exception.CarNotFoundException;
 import top.nextnet.model.Car;
 import top.nextnet.model.FareInfo;
+import top.nextnet.model.FareWaiting;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -22,7 +23,9 @@ public class FareServiceImpl implements FareService{
     CarGateway carGateway;
 
     @Override
-    public void handleFare(Fare f) {
+    public void handleFare(FareWaiting fw) {
+        Fare f = new Fare(fw.getDeparture(), fw.getPassengerId(), fw.getDate());
+
         TextIO textIO = TextIoFactory.getTextIO();
         carInterface.accept(textIO, new RunnerData(""));
         try {
@@ -30,31 +33,31 @@ public class FareServiceImpl implements FareService{
             carInterface.showCarState(c);
             f.setCarId(c.getId());
 
-            while (true) {
-                try {
-                    if (!carInterface.checkIdentity(f.getPassengerId())) {
-                        break;
-                    }
-                    String dest = carInterface.getAddressDestination();
-                    FareInfo infos = carGateway.getDistanceAndDurationFare("12 Avenue Condorcet 91200 Athis-Mons", dest);
-                    carInterface.showInfoMessage("Destination is " + infos.getDistance() + "km away." + "\nWe will be arriving in " + infos.getDuration() + " minutes.");
-                    f.setDestination(dest);
-                    f.setDistance(infos.getDistance());
-                    carInterface.traveling();
-                    carGateway.sendFareToGreenCab(f);
-                    carInterface.showInfoMessage("Price of this fare is " + f.getPrice() + "€. GreenCab will charge you in a few minutes.\n Have a nice day !");
-                    //update currentKm for car
-                    if (carGateway.checkNeedRecharge(c.getId())) {
-                        carGateway.notifyRecharge(c.getId(), dest);
-                        carInterface.showErrorMessage("This car needs a recharge.");
-                        break;
-                    }
-                    carGateway.notifyAvailability(c.getId(), dest);
-
-                } catch (Exception e) {
-                    carInterface.showErrorMessage(e.getMessage());
+            try {
+                if (!carInterface.checkIdentity(f.getPassengerId())) {
+                    return;
                 }
+                String dest = carInterface.getAddressDestination();
+                FareInfo infos = carGateway.getDistanceAndDurationFare("12 Avenue Condorcet 91200 Athis-Mons", dest);
+                carInterface.showInfoMessage("Destination is " + infos.getDistance() + "km away." + "\nWe will be arriving in " + infos.getDuration() + " minutes.");
+                f.setDestination(dest);
+                f.setDistance(infos.getDistance());
+                carInterface.traveling();
+                f.calculatePrice();
+                carGateway.sendFareToGreenCab(f);
+                carInterface.showInfoMessage("Price of this fare is " + f.getPrice() + "€. GreenCab will charge you in a few minutes.\n Have a nice day !");
+                //update currentKm for car
+                if (carGateway.checkNeedRecharge(c.getId())) {
+                    carGateway.notifyRecharge(c.getId(), dest);
+                    carInterface.showErrorMessage("This car needs a recharge.");
+                    return;
+                }
+                carGateway.notifyAvailability(c.getId(), dest);
+
+            } catch (Exception e) {
+                carInterface.showErrorMessage(e.getMessage());
             }
+
         } catch (CarNotFoundException e) {
             carInterface.showErrorMessage(e.getMessage());
         }

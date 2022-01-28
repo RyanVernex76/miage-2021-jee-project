@@ -1,8 +1,8 @@
 package top.nextnet.service;
 
-import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
+import top.nextnet.model.FareWaiting;
 
 public interface FareService {
 
-    void handleFare(Fare f);
+    void handleFare(FareWaiting f);
 }
