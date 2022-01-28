@@ -33,6 +33,11 @@ public class AutonomousCarDaoImpl implements  AutonomousCarDao{
     }
 
     @Override
+    public void insertNewCar(int carId) {
+        AutonomousCar newCar = new AutonomousCar(carId, true, "XX-" + carId + "-CAB");
+    }
+
+    @Override
     public void setCarPosition(CarPosition carPos) {
         PositionableElement pe = new PositionableElement(carPos.getCarId(), null);
         em.persist(pe);

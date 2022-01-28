@@ -27,6 +27,16 @@ public class AutonomousCar {
     @Column(name = "license_plate", nullable = false, length = 20)
     private String licensePlate;
 
+    public AutonomousCar(int carId, boolean available, String plate) {
+        this.id = carId;
+        this.available = true;
+        this.licensePlate = plate;
+    }
+
+    public AutonomousCar() {
+
+    }
+
     public String getLicensePlate() {
         return licensePlate;
     }
