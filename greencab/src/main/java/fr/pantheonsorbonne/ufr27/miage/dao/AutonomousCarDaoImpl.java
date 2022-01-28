@@ -5,10 +5,12 @@ import fr.pantheonsorbonne.ufr27.miage.exception.CarNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.model.AutonomousCar;
 import fr.pantheonsorbonne.ufr27.miage.model.PositionableElement;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
+@ApplicationScoped
 public class AutonomousCarDaoImpl implements  AutonomousCarDao{
 
     @PersistenceContext(name="mysql")

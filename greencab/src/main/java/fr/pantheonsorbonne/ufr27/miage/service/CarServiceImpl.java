@@ -4,8 +4,10 @@ import fr.pantheonsorbonne.ufr27.miage.dao.AutonomousCarDao;
 import fr.pantheonsorbonne.ufr27.miage.dto.CarPosition;
 import fr.pantheonsorbonne.ufr27.miage.exception.CarNotFoundException;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+@ApplicationScoped
 public class CarServiceImpl implements CarService{
 
     @Inject
