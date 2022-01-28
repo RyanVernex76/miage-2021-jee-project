@@ -6,6 +6,7 @@ import org.beryx.textio.TextIoFactory;
 import picocli.CommandLine.Command;
 import top.nextnet.exception.CarNotFoundException;
 import top.nextnet.model.Car;
+import top.nextnet.model.FareInfo;
 import top.nextnet.service.CarGateway;
 
 
@@ -36,9 +37,9 @@ public class Main implements Runnable {
                 try {
                     int passengerId = carInterface.checkIdentity();
                     String dest = carInterface.getAddressDestination();
-                    int infosFare[] = carGateway.getDistanceAndDurationFare("12 Avenue Condorcet 91200 Athis-Mons", dest);
-                    carInterface.showInfoMessage("Destination is " + infosFare[0] + "km away." + "\nWe will be arriving in " + infosFare[1] + " minutes.");
-                    Fare f = new Fare(infosFare[0], passengerId, c.getId());
+                    FareInfo infos = carGateway.getDistanceAndDurationFare("12 Avenue Condorcet 91200 Athis-Mons", dest);
+                    carInterface.showInfoMessage("Destination is " + infos.getDistance() + "km away." + "\nWe will be arriving in " + infos.getDuration() + " minutes.");
+                    Fare f = new Fare(infos.getDistance(), passengerId, c.getId());
                     carInterface.traveling();
                     carGateway.sendFareToGreenCab(f);
                     carInterface.showInfoMessage("Price of this fare is " + f.getPrice() + "€. GreenCab will charge you in a few minutes.\n Have a nice day !");

@@ -6,11 +6,10 @@ import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.GeocodingResult;
-import top.nextnet.cli.UserInterfaceCLI;
+import top.nextnet.model.FareInfo;
 import top.nextnet.resource.GoogleMapService;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import java.io.IOException;
 
 @ApplicationScoped
@@ -18,7 +17,7 @@ public class GoogleMapServiceImpl implements GoogleMapService {
 
     static final String API_KEY_GEOCODING = "AIzaSyBAiXb0PdYJofkqCvJP2-7w42ceh1-TlP8";
 
-    public int[] getDistanceAndDuration(String addressOrigin, String addressDestination)
+    public FareInfo getDistanceAndDuration(String addressOrigin, String addressDestination)
             throws IOException, InterruptedException, ApiException {
 
         GeoApiContext context = new GeoApiContext.Builder().apiKey(API_KEY_GEOCODING).build();
@@ -29,9 +28,9 @@ public class GoogleMapServiceImpl implements GoogleMapService {
                 new String[]{source[0].formattedAddress},
                 new String[]{dest[0].formattedAddress}).await();
 
-        return new int[] {
+        return new FareInfo(
                 Math.toIntExact(matrix.rows[0].elements[0].distance.inMeters / 1000),
                 Math.toIntExact(matrix.rows[0].elements[0].duration.inSeconds / 60)
-        };
+        );
     }
 }

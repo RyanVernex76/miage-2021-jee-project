@@ -8,6 +8,7 @@ import org.apache.camel.ProducerTemplate;
 import top.nextnet.dao.CarDao;
 import top.nextnet.exception.CarNotFoundException;
 import top.nextnet.model.Car;
+import top.nextnet.model.FareInfo;
 import top.nextnet.resource.GoogleMapService;
 import top.nextnet.service.CarGateway;
 
@@ -54,7 +55,7 @@ public class CarGatewayImpl implements CarGateway {
     }
 
     @Override
-    public int [] getDistanceAndDurationFare(String origin, String dest) {
+    public FareInfo getDistanceAndDurationFare(String origin, String dest) {
         try {
 
             return maps.getDistanceAndDuration(origin, dest);
