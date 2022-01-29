@@ -9,6 +9,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 @ApplicationScoped
 public class AutonomousCarDaoImpl implements  AutonomousCarDao{
@@ -19,7 +20,7 @@ public class AutonomousCarDaoImpl implements  AutonomousCarDao{
     @Override
     public AutonomousCar getCar(int carId) throws CarNotFoundException {
         try{
-            AutonomousCar c = (AutonomousCar) em.createQuery("Select c from AutonomousCar c where c.id=:id").setParameter("id", carId).getSingleResult();
+            AutonomousCar c = em.find(AutonomousCar.class, carId);
             return c;
         }
         catch (NoResultException e){
@@ -28,6 +29,7 @@ public class AutonomousCarDaoImpl implements  AutonomousCarDao{
     }
 
     @Override
+    @Transactional
     public void setAvailable(int carId) throws CarNotFoundException {
         AutonomousCar car = this.getCar(carId);
         car.setAvailable(true);
@@ -35,11 +37,13 @@ public class AutonomousCarDaoImpl implements  AutonomousCarDao{
     }
 
     @Override
+    @Transactional
     public void insertNewCar(int carId) {
         AutonomousCar newCar = new AutonomousCar(carId, true, "XX-" + carId + "-CAB");
     }
 
     @Override
+    @Transactional
     public void setCarPosition(CarPosition carPos) {
         PositionableElement pe = new PositionableElement(carPos.getCarId(), null);
         em.persist(pe);

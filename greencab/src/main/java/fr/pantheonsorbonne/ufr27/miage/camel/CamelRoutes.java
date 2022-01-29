@@ -3,9 +3,6 @@ package fr.pantheonsorbonne.ufr27.miage.camel;
 
 import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
 import org.apache.camel.CamelContext;
-import org.apache.camel.CamelExecutionException;
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -39,7 +36,7 @@ public class CamelRoutes extends RouteBuilder {
                 .unmarshal().json(Fare.class)//
                 .bean(fareHandler, "register").marshal().json()
         ;
-
+/*
         // Receives CarPosition object => register available + latest position
         from("jms:" + jmsPrefix + "available")//
                 .log("car is available: ${in.headers}")//
@@ -58,5 +55,7 @@ public class CamelRoutes extends RouteBuilder {
                 .marshal().json()
                 .to("jms:topic:" + jmsPrefix + "cancellation");
 
+
+ */
     }
 }
