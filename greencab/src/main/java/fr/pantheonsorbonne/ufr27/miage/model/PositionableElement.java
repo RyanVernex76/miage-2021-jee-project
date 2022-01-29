@@ -1,5 +1,7 @@
 package fr.pantheonsorbonne.ufr27.miage.model;
 
+import fr.pantheonsorbonne.ufr27.miage.dto.Position;
+
 import javax.persistence.*;
 
 @Table(name = "Positionable_element")
@@ -15,6 +17,16 @@ public class PositionableElement {
 
     @Column(name = "longitude")
     private Double longitude;
+
+    public PositionableElement(int elementId, Position pos) {
+        this.id = elementId;
+        this.latitude = pos.getLat();
+        this.longitude = pos.getLon();
+    }
+
+    public PositionableElement() {
+
+    }
 
     public Double getLongitude() {
         return longitude;

@@ -1,7 +1,6 @@
 package top.nextnet.model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
 
 @Table(name = "Fare_Waiting")

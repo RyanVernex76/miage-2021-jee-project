@@ -2,6 +2,7 @@ package fr.pantheonsorbonne.ufr27.miage.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 public class Fare {
@@ -22,13 +23,13 @@ public class Fare {
     private Double price;
 
     @Column(name = "date", nullable = false)
-    private LocalDate date;
+    private Date date;
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
