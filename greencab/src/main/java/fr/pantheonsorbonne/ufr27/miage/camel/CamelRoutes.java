@@ -38,11 +38,11 @@ public class CamelRoutes extends RouteBuilder {
 
         // NEED TO MERGE WITH JUICER BRANCH TO GET IMPL
         // Sets juicer available or not
-        from("jms:" + jmsPrefix + "juicerAvailable")
-                .log("juicer available: ${in.headers}")
-                .unmarshal().json(Invoice.class)
-                .bean(juicerHandler, "setAvailable").marshal().json()
-        ;
+//        from("jms:" + jmsPrefix + "juicerAvailable")
+//                .log("juicer available: ${in.headers}")
+//                .unmarshal().json(Invoice.class)
+//                .bean(juicerHandler, "setAvailable").marshal().json()
+//        ;
 
         // Sets car available or not --> need to merge with greenCabRV
 //        from("jms:" + jmsPrefix + "available")//
