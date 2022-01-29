@@ -1,17 +1,7 @@
 package fr.pantheonsorbonne.ufr27.miage.camel;
 
-
-import fr.pantheonsorbonne.ufr27.miage.dao.NoSuchTicketException;
-import fr.pantheonsorbonne.ufr27.miage.dto.Booking;
-import fr.pantheonsorbonne.ufr27.miage.dto.ETicket;
-import fr.pantheonsorbonne.ufr27.miage.exception.CustomerNotFoundException;
-import fr.pantheonsorbonne.ufr27.miage.exception.ExpiredTransitionalTicketException;
-import fr.pantheonsorbonne.ufr27.miage.exception.UnsuficientQuotaForVenueException;
-import fr.pantheonsorbonne.ufr27.miage.service.TicketingService;
+import fr.pantheonsorbonne.ufr27.miage.dto.Invoice;
 import org.apache.camel.CamelContext;
-import org.apache.camel.CamelExecutionException;
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -26,10 +16,10 @@ public class CamelRoutes extends RouteBuilder {
     String jmsPrefix;
 
     @Inject
-    BookingGateway bookingHandler;
+    JuicerGateway juicerHandler;
 
     @Inject
-    TicketingService ticketingService;
+    InvoiceGateway invoiceHandler;
 
     @Inject
     CamelContext camelContext;
@@ -39,56 +29,26 @@ public class CamelRoutes extends RouteBuilder {
 
         camelContext.setTracing(true);
 
-        onException(ExpiredTransitionalTicketException.class)
-                .handled(true)
-                .process(new ExpiredTransitionalTicketProcessor())
-                .setHeader("success", simple("false"))
-                .log("Clearning expired transitional ticket ${body}")
-                .bean(ticketingService, "cleanUpTransitionalTicket");
-
-        onException(UnsuficientQuotaForVenueException.class)
-                .handled(true)
-                .setHeader("success", simple("false"))
-                .setBody(simple("Vendor has not enough quota for this venue"));
-
-
-        onException(NoSuchTicketException.class)
-                .handled(true)
-                .setHeader("success", simple("false"))
-                .setBody(simple("Ticket has expired"));
-
-        onException(CustomerNotFoundException.NoSeatAvailableException.class)
-                .handled(true)
-                .setHeader("success", simple("false"))
-                .setBody(simple("No seat is available"));
-
-
-        from("jms:" + jmsPrefix + "booking?exchangePattern=InOut")//
-                .log("ticker received: ${in.headers}")//
-                .unmarshal().json(Booking.class)//
-                .bean(bookingHandler, "book").marshal().json()
+        // Receives invoice
+        from("jms:" + jmsPrefix + "invoice")
+                .log("invoice received: ${in.headers}")
+                .unmarshal().json(Invoice.class)
+                .bean(invoiceHandler, "register").marshal().json()
         ;
 
+        // NEED TO MERGE WITH JUICER BRANCH TO GET IMPL
+        // Sets juicer available or not
+        from("jms:" + jmsPrefix + "juicerAvailable")
+                .log("juicer available: ${in.headers}")
+                .unmarshal().json(Invoice.class)
+                .bean(juicerHandler, "setAvailable").marshal().json()
+        ;
 
-        from("jms:" + jmsPrefix + "ticket?exchangePattern=InOut")
-                .unmarshal().json(ETicket.class)
-                .bean(ticketingService, "emitTicket").marshal().json();
-
-
-        from("direct:ticketCancel")
-                .marshal().json()
-                .to("jms:topic:" + jmsPrefix + "cancellation");
-
-    }
-
-    private static class ExpiredTransitionalTicketProcessor implements Processor {
-        @Override
-        public void process(Exchange exchange) throws Exception {
-            //https://camel.apache.org/manual/exception-clause.html
-            CamelExecutionException caused = (CamelExecutionException) exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Throwable.class);
-
-
-            exchange.getMessage().setBody(((ExpiredTransitionalTicketException) caused.getCause()).getExpiredTicketId());
-        }
+        // Sets car available or not --> need to merge with greenCabRV
+//        from("jms:" + jmsPrefix + "available")//
+//                .log("car is available: ${in.headers}")//
+//                .unmarshal().json(Fare.class)//
+//                .bean(carHandler, "setAvailable").marshal().json()
+//        ;
     }
 }
