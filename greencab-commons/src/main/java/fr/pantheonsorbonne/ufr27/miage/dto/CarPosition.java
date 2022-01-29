@@ -3,6 +3,8 @@ package fr.pantheonsorbonne.ufr27.miage.dto;
 public class CarPosition {
 
     int carId;
+
+
     String addressPos;
 
     public CarPosition(int carId, String address) {
@@ -21,7 +23,7 @@ public class CarPosition {
         this.carId = carId;
     }
 
-    public String getPos() {
+    public String getPosition() {
         return this.addressPos;
     }
 

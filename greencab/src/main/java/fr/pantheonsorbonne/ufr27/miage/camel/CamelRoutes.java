@@ -1,6 +1,7 @@
 package fr.pantheonsorbonne.ufr27.miage.camel;
 
 
+import fr.pantheonsorbonne.ufr27.miage.dto.CarPosition;
 import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
@@ -36,14 +37,14 @@ public class CamelRoutes extends RouteBuilder {
                 .unmarshal().json(Fare.class)//
                 .bean(fareHandler, "register").marshal().json()
         ;
-/*
+
         // Receives CarPosition object => register available + latest position
-        from("jms:" + jmsPrefix + "available")//
+        from("jms:" + jmsPrefix + "carAvailable")//
                 .log("car is available: ${in.headers}")//
-                .unmarshal().json(Fare.class)//
+                .unmarshal().json(CarPosition.class)//
                 .bean(carHandler, "setAvailable").marshal().json()
         ;
-
+        /*
         // Receives CarPosition object => notify needRecharge + latest location
         from("jms:" + jmsPrefix + "recharge")//
                 .log("car need recharge: ${in.headers}")//
