@@ -7,9 +7,11 @@ import com.example.service.BorneGateway;
 import org.beryx.textio.TextIO;
 import org.beryx.textio.TextTerminal;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.awt.*;
 
+@ApplicationScoped
 public class UserInterfaceCLIImpl implements UserInterfaceCLI{
 
     TextTerminal<?> terminal;

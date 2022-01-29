@@ -28,8 +28,10 @@ public class CamelRoutes extends RouteBuilder {
                 .marshal().json()
                 .to("jms:" + jmsPrefix + "juicerAvailable");
 
-        from("direct:available")
+        /*from("direct:available")
                 .marshal().json()
                 .to("jms:" + jmsPrefix + "carAvailable");
+
+         */
     }
 }

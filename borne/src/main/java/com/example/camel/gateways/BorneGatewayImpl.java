@@ -6,9 +6,11 @@ import fr.pantheonsorbonne.ufr27.miage.dto.Invoice;
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.io.IOException;
 
+@ApplicationScoped
 public class BorneGatewayImpl implements BorneGateway {
 
     @Inject
