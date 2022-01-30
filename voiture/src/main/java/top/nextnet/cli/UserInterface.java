@@ -2,6 +2,7 @@ package top.nextnet.cli;
 
 import top.nextnet.exception.CarNotFoundException;
 import top.nextnet.model.Car;
+import top.nextnet.model.FareWaiting;
 
 public interface UserInterface {
     void showErrorMessage(String errorMessage);
@@ -17,5 +18,7 @@ public interface UserInterface {
     String getAddressDestination();
 
     Car connexionCar() throws CarNotFoundException;
+
+    FareWaiting chooseFareToHandle(FareWaiting[] fares);
 
 }

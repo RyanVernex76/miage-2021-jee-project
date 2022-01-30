@@ -23,16 +23,12 @@ public class FareServiceImpl implements FareService{
     CarGateway carGateway;
 
     @Override
-    public void handleFare(FareWaiting fw) {
+    public void handleFare(FareWaiting fw, Car c) {
         Fare f = new Fare(fw.getDeparture(), fw.getPassengerId(), fw.getDate());
+        f.setCarId(c.getId());
 
         TextIO textIO = TextIoFactory.getTextIO();
         carInterface.accept(textIO, new RunnerData(""));
-        try {
-            Car c = carInterface.connexionCar();
-            carInterface.showCarState(c);
-            f.setCarId(c.getId());
-
             try {
                 if (!carInterface.checkIdentity(f.getPassengerId())) {
                     return;
@@ -57,9 +53,5 @@ public class FareServiceImpl implements FareService{
             } catch (Exception e) {
                 carInterface.showErrorMessage(e.getMessage());
             }
-
-        } catch (CarNotFoundException e) {
-            carInterface.showErrorMessage(e.getMessage());
-        }
     }
 }

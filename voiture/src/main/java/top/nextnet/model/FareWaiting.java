@@ -14,6 +14,13 @@ public class FareWaiting {
     @Column(name = "passenger_id", nullable = false)
     private Integer passengerId;
 
+    @Override
+    public String toString() {
+        return "Fare " +
+                id +
+                " : departure=" + departure ;
+    }
+
     @Column(name = "date")
     private Date date;
 

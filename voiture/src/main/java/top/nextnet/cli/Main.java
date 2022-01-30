@@ -3,8 +3,12 @@ package top.nextnet.cli;
 import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
+import org.beryx.textio.TextIO;
+import org.beryx.textio.TextIoFactory;
 import picocli.CommandLine.Command;
 import top.nextnet.dao.FareWaitingDao;
+import top.nextnet.exception.CarNotFoundException;
+import top.nextnet.model.Car;
 import top.nextnet.model.FareWaiting;
 import top.nextnet.service.FareService;
 
@@ -24,16 +28,27 @@ public class Main implements Runnable {
     @Inject
     FareWaitingDao fareDao;
 
+    @Inject
+    UserInterfaceCLI cli;
+
     @Override
     public void run() {
-        this.testFare();
 
+        TextIO textIO = TextIoFactory.getTextIO();
+        cli.accept(textIO, new RunnerData(""));
 
-        FareWaiting f;
-        while (fareDao.hasNext()) {
-            f = fareDao.getFareWaiting();
-            fareService.handleFare(f);
-            fareDao.removeFareFromQueue(f);
+        try {
+            Car c = cli.connexionCar();
+            cli.showCarState(c);
+            FareWaiting[] fares;
+            while(fareDao.hasNext()) {
+                fares = fareDao.getFaresWaiting();
+                FareWaiting f = cli.chooseFareToHandle(fares);
+                fareService.handleFare(f, c);
+                fareDao.removeFareFromQueue(f);
+            }
+        }catch (CarNotFoundException e){
+            e.printStackTrace();
         }
     }
 

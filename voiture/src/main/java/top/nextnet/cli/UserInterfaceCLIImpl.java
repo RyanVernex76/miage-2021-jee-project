@@ -1,13 +1,16 @@
 package top.nextnet.cli;
 
+import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
 import org.beryx.textio.TextIO;
 import org.beryx.textio.TextTerminal;
 import top.nextnet.exception.CarNotFoundException;
 import top.nextnet.model.Car;
+import top.nextnet.model.FareWaiting;
 import top.nextnet.service.CarGateway;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.awt.*;
+import java.util.Arrays;
 
 
 @ApplicationScoped
@@ -104,6 +107,27 @@ public class UserInterfaceCLIImpl implements UserInterfaceCLI {
         terminal.println("Please enter the id of the car you want to use (number)");
         int id = textIO.newIntInputReader().read("ID");
         return carGateway.getCar(id);
+    }
+
+    @Override
+    public FareWaiting chooseFareToHandle(FareWaiting[] fares){
+        terminal.println("Please enter the id of the fare you want to handle : ");
+        Integer[] fareIds = new Integer[fares.length];
+        for(int i = 0; i < fares.length; i++){
+            terminal.println(fares[i].toString());
+            fareIds[i] = fares[i].getId();
+        }
+
+        int input = textIO.newIntInputReader()
+                .withNumberedPossibleValues(fareIds)
+                .read("Fare ID");
+
+        FareWaiting choice = new FareWaiting();
+        for (int i = 0; i < fares.length; i++)
+            if(fares[i].getId() == input)
+                choice = fares[i];
+
+        return choice;
     }
 
 
