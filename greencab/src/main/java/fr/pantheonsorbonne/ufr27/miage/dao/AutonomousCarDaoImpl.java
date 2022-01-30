@@ -2,6 +2,7 @@ package fr.pantheonsorbonne.ufr27.miage.dao;
 
 import com.google.maps.errors.ApiException;
 import fr.pantheonsorbonne.ufr27.miage.dto.CarPosition;
+import fr.pantheonsorbonne.ufr27.miage.dto.Position;
 import fr.pantheonsorbonne.ufr27.miage.exception.CarNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.model.AutonomousCar;
 import fr.pantheonsorbonne.ufr27.miage.model.PositionableElement;
@@ -15,6 +16,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.List;
 
 @ApplicationScoped
 @ActivateRequestContext
@@ -63,4 +65,23 @@ public class AutonomousCarDaoImpl implements  AutonomousCarDao{
                 .executeUpdate();
 
     }
+
+    @Override
+    public AutonomousCar[] getAvailableCars() throws CarNotFoundException {
+        List cars = em.createQuery("SELECT c from AutonomousCar c where c.available=true").getResultList();
+        AutonomousCar[] availableCars = new AutonomousCar[] {};
+
+        for(int i = 0; i < cars.size(); i++)
+            availableCars[i] = (AutonomousCar) cars.get(i);
+
+        return availableCars;
+    }
+
+    @Override
+    public Position getPosition(int carId) {
+        PositionableElement pe = em.find(PositionableElement.class, carId);
+        return new Position(pe.getLatitude(), pe.getLongitude());
+    }
+
+
 }

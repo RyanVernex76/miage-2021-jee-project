@@ -3,7 +3,10 @@ package fr.pantheonsorbonne.ufr27.miage.service;
 import com.google.maps.errors.ApiException;
 import fr.pantheonsorbonne.ufr27.miage.dao.AutonomousCarDao;
 import fr.pantheonsorbonne.ufr27.miage.dto.CarPosition;
+import fr.pantheonsorbonne.ufr27.miage.dto.Position;
 import fr.pantheonsorbonne.ufr27.miage.exception.CarNotFoundException;
+import fr.pantheonsorbonne.ufr27.miage.model.AutonomousCar;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -14,6 +17,12 @@ public class CarServiceImpl implements CarService{
 
     @Inject
     AutonomousCarDao carDao;
+
+    @Inject
+    GoogleMapService maps;
+
+    @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.distanceMax")
+    double maxDistance;
 
     @Override
     public CarPosition setAvailable(CarPosition car) {
@@ -37,5 +46,13 @@ public class CarServiceImpl implements CarService{
     public CarPosition notifyRecharge(CarPosition car) {
         // TO IMPLEMENT
         return null;
+    }
+
+    @Override
+    public boolean checkDistance(int carId, String dest) throws IOException, InterruptedException, ApiException {
+        Position carCurrentPosition = carDao.getPosition(carId);
+        double distance = maps.getDistance(maps.getAddress(carCurrentPosition), dest);
+
+        return distance <= maxDistance;
     }
 }
