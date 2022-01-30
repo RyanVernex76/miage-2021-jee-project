@@ -1,5 +1,6 @@
 package top.nextnet.cli;
 
+import com.google.maps.errors.ApiException;
 import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
@@ -43,11 +44,13 @@ public class Main implements Runnable {
             FareWaiting[] fares;
             while(fareDao.hasNext()) {
                 fares = fareDao.getFaresWaiting();
-                FareWaiting f = cli.chooseFareToHandle(fares);
+                FareWaiting f = cli.chooseFareToHandle(fares, c);
                 fareService.handleFare(f, c);
                 fareDao.removeFareFromQueue(f);
             }
         }catch (CarNotFoundException e){
+            e.printStackTrace();
+        } catch (ApiException | IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }

@@ -5,7 +5,6 @@ import org.beryx.textio.TextIO;
 import org.beryx.textio.TextIoFactory;
 import top.nextnet.cli.RunnerData;
 import top.nextnet.cli.UserInterfaceCLI;
-import top.nextnet.exception.CarNotFoundException;
 import top.nextnet.model.Car;
 import top.nextnet.model.FareInfo;
 import top.nextnet.model.FareWaiting;

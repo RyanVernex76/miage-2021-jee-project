@@ -1,8 +1,11 @@
 package top.nextnet.cli;
 
+import com.google.maps.errors.ApiException;
 import top.nextnet.exception.CarNotFoundException;
 import top.nextnet.model.Car;
 import top.nextnet.model.FareWaiting;
+
+import java.io.IOException;
 
 public interface UserInterface {
     void showErrorMessage(String errorMessage);
@@ -19,6 +22,6 @@ public interface UserInterface {
 
     Car connexionCar() throws CarNotFoundException;
 
-    FareWaiting chooseFareToHandle(FareWaiting[] fares);
+    FareWaiting chooseFareToHandle(FareWaiting[] fares, Car c) throws IOException, InterruptedException, ApiException;
 
 }

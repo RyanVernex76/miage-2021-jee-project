@@ -3,6 +3,7 @@ package top.nextnet.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 @Entity
 public class Car {
@@ -15,6 +16,18 @@ public class Car {
 
     @Column(name = "current_km")
     private Integer currentKm;
+
+    @Lob
+    @Column(name = "currentPosition")
+    private String currentPosition;
+
+    public String getCurrentPosition() {
+        return currentPosition;
+    }
+
+    public void setCurrentPosition(String currentPosition) {
+        this.currentPosition = currentPosition;
+    }
 
     public Integer getCurrentKm() {
         return currentKm;

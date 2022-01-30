@@ -1,16 +1,17 @@
 package top.nextnet.cli;
 
-import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
+import com.google.maps.errors.ApiException;
 import org.beryx.textio.TextIO;
 import org.beryx.textio.TextTerminal;
 import top.nextnet.exception.CarNotFoundException;
 import top.nextnet.model.Car;
+import top.nextnet.model.DistanceCarFare;
 import top.nextnet.model.FareWaiting;
 import top.nextnet.service.CarGateway;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.awt.*;
-import java.util.Arrays;
+import java.io.IOException;
 
 
 @ApplicationScoped
@@ -110,11 +111,15 @@ public class UserInterfaceCLIImpl implements UserInterfaceCLI {
     }
 
     @Override
-    public FareWaiting chooseFareToHandle(FareWaiting[] fares){
+    public FareWaiting chooseFareToHandle(FareWaiting[] fares, Car c) throws ApiException, IOException, InterruptedException {
         terminal.println("Please enter the id of the fare you want to handle : ");
         Integer[] fareIds = new Integer[fares.length];
+
+        DistanceCarFare dcf;
         for(int i = 0; i < fares.length; i++){
-            terminal.println(fares[i].toString());
+            dcf = new DistanceCarFare(fares[i], c);
+            carGateway.calculateDistanceCarPassenger(dcf);
+            terminal.println(dcf.toString());
             fareIds[i] = fares[i].getId();
         }
 

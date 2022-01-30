@@ -8,8 +8,9 @@ import org.apache.camel.ProducerTemplate;
 import top.nextnet.dao.CarDao;
 import top.nextnet.exception.CarNotFoundException;
 import top.nextnet.model.Car;
+import top.nextnet.model.DistanceCarFare;
 import top.nextnet.model.FareInfo;
-import top.nextnet.resource.GoogleMapService;
+import top.nextnet.service.GoogleMapService;
 import top.nextnet.service.CarGateway;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -67,6 +68,10 @@ public class CarGatewayImpl implements CarGateway {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void calculateDistanceCarPassenger(DistanceCarFare dcf) throws IOException, InterruptedException, ApiException {
+     dcf.setDistance(maps.getDistance(dcf.getFw().getDeparture(), dcf.getC().getCurrentPosition()));
     }
 
     @Override
