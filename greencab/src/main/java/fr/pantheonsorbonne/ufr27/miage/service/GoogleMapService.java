@@ -8,4 +8,8 @@ import java.io.IOException;
 public interface GoogleMapService {
 
     Position getTranslatedCoordonates(String address) throws IOException, InterruptedException, ApiException;
+
+    String getAddress(Position p) throws IOException, InterruptedException, ApiException;
+
+    double getDistance(String dep, String arv) throws IOException, InterruptedException, ApiException;
 }
