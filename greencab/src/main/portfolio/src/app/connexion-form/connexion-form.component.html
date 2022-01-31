@@ -1,0 +1,7 @@
+<form class="form-inline ms-4" [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+  <input formControlName="login" class="form-control mr-sm-2" type="text"
+         placeholder="Login" aria-label="Search">
+  <input formControlName="password" class="form-control mr-sm-2" type="password"
+         placeholder="Password" aria-label="Search">
+  <button class="btn btn-outline-secondary my-2 my-sm-0 ms-2" type="submit">Login</button>
+</form>
