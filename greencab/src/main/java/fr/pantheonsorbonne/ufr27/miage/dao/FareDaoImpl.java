@@ -2,7 +2,6 @@ package fr.pantheonsorbonne.ufr27.miage.dao;
 
 import fr.pantheonsorbonne.ufr27.miage.exception.PassengerNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.model.Fare;
-import fr.pantheonsorbonne.ufr27.miage.model.Passenger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

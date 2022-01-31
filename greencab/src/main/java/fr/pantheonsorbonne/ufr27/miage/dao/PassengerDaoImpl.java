@@ -1,8 +1,6 @@
 package fr.pantheonsorbonne.ufr27.miage.dao;
 
-import fr.pantheonsorbonne.ufr27.miage.exception.CarNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.exception.PassengerNotFoundException;
-import fr.pantheonsorbonne.ufr27.miage.model.AutonomousCar;
 import fr.pantheonsorbonne.ufr27.miage.model.Passenger;
 
 import javax.enterprise.context.ApplicationScoped;

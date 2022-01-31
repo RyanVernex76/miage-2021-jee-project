@@ -1,7 +1,6 @@
 package fr.pantheonsorbonne.ufr27.miage.resource;
 
 import fr.pantheonsorbonne.ufr27.miage.dao.PassengerDao;
-import fr.pantheonsorbonne.ufr27.miage.dto.RemainingQuota;
 import fr.pantheonsorbonne.ufr27.miage.exception.PassengerNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.model.Passenger;
 
