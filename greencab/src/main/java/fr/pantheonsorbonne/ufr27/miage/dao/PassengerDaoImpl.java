@@ -9,6 +9,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @ApplicationScoped
 public class PassengerDaoImpl implements PassengerDao{
@@ -25,6 +26,17 @@ public class PassengerDaoImpl implements PassengerDao{
         catch (NoResultException e){
             throw new PassengerNotFoundException(id);
         }
+    }
+
+    @Override
+    public Passenger[] getPassengers() {
+        List results = em.createQuery("SELECT p from Passenger p").getResultList();
+        Passenger[] passengers = new Passenger[results.size()];
+
+        for(int i = 0; i < results.size(); i++)
+            passengers[i] = (Passenger) results.get(i);
+
+        return passengers;
     }
 
     @Override

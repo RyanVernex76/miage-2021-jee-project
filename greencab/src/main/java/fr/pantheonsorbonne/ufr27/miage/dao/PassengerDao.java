@@ -7,6 +7,8 @@ public interface PassengerDao {
 
     Passenger getPassenger(int id) throws PassengerNotFoundException;
 
+    Passenger[] getPassengers();
+
     void insertNewPassenger(Passenger p);
 
 }
