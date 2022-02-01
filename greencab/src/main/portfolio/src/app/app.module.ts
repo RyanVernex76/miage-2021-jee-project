@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { ConnexionFormComponent } from './connexion-form/connexion-form.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import { PassengerComponent } from './passenger/passenger.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ConnexionFormComponent
+    ConnexionFormComponent,
+    PassengerComponent
   ],
   imports: [
     BrowserModule,
