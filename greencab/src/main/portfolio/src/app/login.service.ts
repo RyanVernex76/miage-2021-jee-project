@@ -11,11 +11,13 @@ export class LoginService {
 
   readonly prefix = "http://localhost:8080/";
 
-  private _currentPassenger: Passenger | undefined;
+  private _currentPassenger: Passenger | undefined = new Passenger(
+    1, "Ryan","Vernex", "118 218", "ryanvernex@yahoo.fr", "password12"
+  );
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  getUser(id: number) {
+  getPassenger(id: number) {
     return this.http.get<Passenger>(this.prefix + "passenger/" + id);
   }
 

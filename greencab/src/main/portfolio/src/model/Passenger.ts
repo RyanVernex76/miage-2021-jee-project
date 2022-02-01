@@ -2,16 +2,16 @@
 
 export class Passenger {
   private _id: number;
-  private _first_name: string;
-  private _last_name: string;
+  private _firstName: string;
+  private _lastName: string;
   private _phone: string;
   private _emailAddress: string;
   private _password: string;
 
   constructor(id: number, first_name: string, last_name: string, phone: string, email: string, password: string) {
     this._id = id;
-    this._first_name = first_name;
-    this._last_name = last_name;
+    this._firstName = first_name;
+    this._lastName = last_name;
     this._phone = phone;
     this._emailAddress = email;
     this._password = password;
@@ -21,12 +21,12 @@ export class Passenger {
     return this._id;
   }
 
-  get first_name(): string {
-    return this._first_name;
+  get firstName(): string {
+    return this._firstName;
   }
 
-  get last_name(): string {
-    return this.last_name;
+  get lastName(): string {
+    return this._lastName;
   }
 
   get phone(): string {
