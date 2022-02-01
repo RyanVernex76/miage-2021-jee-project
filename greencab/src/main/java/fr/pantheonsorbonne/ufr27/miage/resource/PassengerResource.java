@@ -26,6 +26,7 @@ public class PassengerResource {
     }
 
     @Path("/all")
+    @Produces({MediaType.APPLICATION_JSON})
     @GET
     public Passenger[] getPassengers(){
         return passengerDao.getPassengers();
