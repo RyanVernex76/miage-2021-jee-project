@@ -30,13 +30,6 @@ public class CamelRoutes extends RouteBuilder {
     public void configure() throws Exception {
         camelContext.setTracing(true);
 
-        //ONLY FOR TEST - NEED TO REMOVE AFTER
-        from("direct:bookFare")
-                .log("booking sent by passenger")
-                .marshal().json()//
-                .to("jms:" + jmsPrefix + "bookFare");
-
-
         // Receive fare and treat it
         from("jms:" + jmsPrefix + "bookFare")//
                 .log("fare received: ${in.headers}")//

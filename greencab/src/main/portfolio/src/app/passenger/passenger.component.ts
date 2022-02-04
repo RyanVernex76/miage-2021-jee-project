@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {LoginService} from "../login.service";
 import {Passenger} from "../../model/Passenger";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {firstValueFrom, Observable} from "rxjs";
 import {Fare} from "../../model/Fare";
 import {GreenCabService} from "../green-cab.service";
@@ -16,7 +16,7 @@ export class PassengerComponent implements OnInit {
   passenger: Passenger | undefined;
   passengerFares: Fare[] = [];
 
-  constructor(private loginService: LoginService, private greenCabService: GreenCabService, private route: ActivatedRoute) { }
+  constructor(private router: Router, private loginService: LoginService, private greenCabService: GreenCabService, private route: ActivatedRoute) { }
 
   async ngOnInit(){
     this.loginService.checkConnect();
@@ -37,4 +37,7 @@ export class PassengerComponent implements OnInit {
     console.log(this.passengerFares);
   }
 
+  redirectBook(id: number) {
+    this.router.navigate(["passenger/"+ id +"/bookFare"]);
+  }
 }

@@ -7,7 +7,8 @@ import {NewFareComponent} from "./new-fare/new-fare.component";
 const routes: Routes = [
   {path: 'login', component: ConnexionFormComponent},
   {path: 'passenger/:id', component: PassengerComponent},
-  {path: 'passenger/:id/bookFare', component: NewFareComponent}
+  {path: 'passenger/:id/bookFare', component: NewFareComponent},
+  {path: '**', redirectTo: 'login'}
 ];
 
 @NgModule({

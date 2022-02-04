@@ -33,11 +33,10 @@ public class FareServiceImpl implements FareService {
         try {
             AutonomousCar car = carDao.getCar(fare.getCarId());
             Passenger pass = passengerDao.getPassenger(fare.getPassengerId());
-            fr.pantheonsorbonne.ufr27.miage.model.Fare f = new fr.pantheonsorbonne.ufr27.miage.model.Fare();
-            f.setCar(car);
-            f.setDate(fare.getDate());
-            f.setPassenger(pass);
-            f.setPrice(fare.getPrice());
+            fr.pantheonsorbonne.ufr27.miage.model.Fare f = new fr.pantheonsorbonne.ufr27.miage.model.Fare(
+                    car, pass, fare.getDeparture(), fare.getDestination(), fare.getPrice(), fare.getDate()
+            );
+
             fareDao.saveFare(f);
             }
         catch (NonUniqueResultException | NoResultException e) {

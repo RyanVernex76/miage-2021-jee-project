@@ -55,14 +55,4 @@ public class Main implements Runnable {
         }
     }
 
-    //ONLY FOR TEST - NEED TO REMOVE AFTER
-    public void testFare(){
-        try(ProducerTemplate producer = context.createProducerTemplate()){
-            producer.sendBody("direct:bookFare",
-                    new Fare("12 Avenue Condorcet Athis-Mons", 2));
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
 }

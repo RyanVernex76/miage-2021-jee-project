@@ -33,7 +33,7 @@ public class FareServiceImpl implements FareService{
                     return;
                 }
                 String dest = carInterface.getAddressDestination();
-                FareInfo infos = carGateway.getDistanceAndDurationFare("12 Avenue Condorcet 91200 Athis-Mons", dest);
+                FareInfo infos = carGateway.getDistanceAndDurationFare(fw.getDeparture(), dest);
                 carInterface.showInfoMessage("Destination is " + infos.getDistance() + "km away." + "\nWe will be arriving in " + infos.getDuration() + " minutes.");
                 f.setDestination(dest);
                 f.setDistance(infos.getDistance());
