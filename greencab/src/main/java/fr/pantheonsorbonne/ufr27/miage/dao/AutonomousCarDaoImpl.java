@@ -56,14 +56,12 @@ public class AutonomousCarDaoImpl implements  AutonomousCarDao{
     @Override
     @Transactional
     public void setCarPosition(CarPosition carPos) throws IOException, InterruptedException, ApiException {
-        PositionableElement pe = new PositionableElement(carPos.getCarId(), maps.getTranslatedCoordonates(carPos.getPosition()));
-        em.createNativeQuery("UPDATE Positionable_element(element_id, latitude, longitude) " +
-                "VALUES(?, ?, ?)")
-                .setParameter(1, pe.getId())
-                .setParameter(2, pe.getLatitude())
-                .setParameter(3, pe.getLongitude())
-                .executeUpdate();
+        PositionableElement pe = em.find(PositionableElement.class, carPos.getCarId());
+        Position newLoc = maps.getTranslatedCoordonates(carPos.getPosition());
+        pe.setLatitude(newLoc.getLat());
+        pe.setLongitude(newLoc.getLon());
 
+        em.persist(pe);
     }
 
     @Override
