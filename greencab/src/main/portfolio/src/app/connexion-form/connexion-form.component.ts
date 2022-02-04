@@ -51,8 +51,6 @@ export class ConnexionFormComponent implements OnInit {
 
     let obs$: Observable<Passenger[]> = this.loginService.getPassengers();
     this.passengers = await firstValueFrom(obs$);
-
-    console.log(this.passengers);
   }
 
 }

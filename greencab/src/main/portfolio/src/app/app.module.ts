@@ -9,13 +9,17 @@ import {HttpClientModule} from "@angular/common/http";
 import { PassengerComponent } from './passenger/passenger.component';
 import { HeaderComponent } from './header/header.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FareTableComponent } from './fare-table/fare-table.component';
+import { NewFareComponent } from './new-fare/new-fare.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ConnexionFormComponent,
     PassengerComponent,
-    HeaderComponent
+    HeaderComponent,
+    FareTableComponent,
+    NewFareComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,8 @@
+<h1>Book a fare</h1>
+
+<h4>Please fill in your current position</h4>
+<form class="form-inline ms-4" [formGroup]="fareForm" (ngSubmit)="onSubmit(fareForm.value)">
+  <input formControlName="location" class="form-control mr-sm-2" type="text"
+         placeholder="Your position" aria-label="Search">
+  <button class="btn btn-outline-secondary my-2 my-sm-0 ms-2" type="submit">Book</button>
+</form>

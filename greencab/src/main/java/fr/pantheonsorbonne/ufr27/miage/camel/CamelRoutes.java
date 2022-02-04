@@ -32,6 +32,14 @@ public class CamelRoutes extends RouteBuilder {
         camelContext.setTracing(true);
 
         // Receives fare from car => Charge passenger
+        from("direct:bookFare")//
+                .log("fare sent to cars: ${in.headers}")//
+                .marshal().json()
+                .to("jms:" + jmsPrefix + "bookFare");
+        ;
+
+
+        // Receives fare from car => Charge passenger
         from("jms:" + jmsPrefix + "fare")//
                 .log("fare received: ${in.headers}")//
                 .unmarshal().json(Fare.class)//
