@@ -21,6 +21,16 @@ export class LoginService {
     return this.http.get<Passenger>(this.prefix + "passenger/" + id);
   }
 
+  createPassenger(pass: Passenger){
+    return this.http.post(this.prefix + "passenger/add", {
+      "firstName" : pass.firstName,
+      "lastName" : pass.lastName,
+      "phone" : pass.phone,
+      "emailAddress" : pass.emailAddress,
+      "password" : pass.password
+    });
+  }
+
   getPassengers(){
     return this.http.get<Passenger[]>(this.prefix + "passenger/all");
   }

@@ -5,10 +5,9 @@ import fr.pantheonsorbonne.ufr27.miage.exception.PassengerNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.model.Passenger;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.json.Json;
+import javax.validation.Valid;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 @Path("/passenger")
@@ -30,6 +29,13 @@ public class PassengerResource {
     @GET
     public Passenger[] getPassengers(){
         return passengerDao.getPassengers();
+    }
+
+    @Path("/add")
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    public void createPassenger(Passenger p){
+        this.passengerDao.insertNewPassenger(p);
     }
 
 }

@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
@@ -38,6 +39,7 @@ public class PassengerDaoImpl implements PassengerDao{
     }
 
     @Override
+    @Transactional
     public void insertNewPassenger(Passenger p) {
         em.persist(p);
     }
