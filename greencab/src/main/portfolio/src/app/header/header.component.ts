@@ -14,6 +14,6 @@ export class HeaderComponent implements OnInit {
   }
 
   isLogged() {
-    return this.login.currentPassenger !== undefined;
+    return this.login.currentUser !== undefined;
   }
 }

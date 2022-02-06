@@ -36,8 +36,8 @@ export class InscriptionJuicerComponent implements OnInit {
       0,
       input.firstName,
       input.lastName,
-      input.emailAddress,
       input.phoneNumber,
+      input.emailAddress,
       input.password,
       new BankAccount(input.IBAN, input.BIC));
     let obs: Observable<any> = await this.loginService.createJuicer(juicer);

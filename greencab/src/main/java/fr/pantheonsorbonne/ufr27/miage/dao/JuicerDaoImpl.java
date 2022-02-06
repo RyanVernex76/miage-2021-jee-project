@@ -28,7 +28,7 @@ public class JuicerDaoImpl implements JuicerDao{
 
     @Override
     public Juicer[] getJuicers() {
-        List results = em.createQuery("SELECT p from Passenger p").getResultList();
+        List results = em.createQuery("SELECT p from Juicer p").getResultList();
         Juicer[] juicers = new Juicer[results.size()];
 
         for(int i = 0; i < results.size(); i++)

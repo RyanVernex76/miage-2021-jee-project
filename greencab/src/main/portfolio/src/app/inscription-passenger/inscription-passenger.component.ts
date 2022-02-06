@@ -27,7 +27,7 @@ export class InscriptionPassengerComponent implements OnInit {
   }
 
   async onSubmit(input:any) {
-    let pass: Passenger = new Passenger(0, input.firstName, input.lastName, input.emailAddress, input.phoneNumber, input.password);
+    let pass: Passenger = new Passenger(0, input.firstName, input.lastName,input.phoneNumber, input.emailAddress, input.password);
     let obs: Observable<any> = await this.loginService.createPassenger(pass);
     let resp:Response = await firstValueFrom(obs);
 

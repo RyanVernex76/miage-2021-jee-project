@@ -1,4 +1,14 @@
 <form class="form-inline ms-4" [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+  <div class="custom-control custom-radio">
+    <input id="passenger" type="radio" class="custom-control-input"
+           formControlName="typeUser" value="passenger">
+    <label class="custom-control-label" for="passenger">Passenger</label>
+  </div>
+  <div class="custom-control custom-radio">
+    <input id="juicer" type="radio" class="custom-control-input"
+           formControlName="typeUser" value="juicer">
+    <label class="custom-control-label" for="juicer">Juicer</label>
+  </div>
   <input formControlName="login" class="form-control mr-sm-2" type="text"
          placeholder="Login" aria-label="Search">
   <input formControlName="password" class="form-control mr-sm-2" type="password"

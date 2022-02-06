@@ -12,9 +12,10 @@ export class LoginService {
 
   readonly prefix = "http://localhost:8080/";
 
-  private _currentPassenger: Passenger | undefined = new Passenger(
-    1, "Ryan","Vernex", "118 218", "ryanvernex@yahoo.fr", "password12"
-  );
+  private _currentUser: Passenger | Juicer | undefined;
+    //new Passenger(
+    //1, "Ryan","Vernex", "118 218", "ryanvernex@yahoo.fr", "password12"
+  //);
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -52,16 +53,20 @@ export class LoginService {
     return this.http.get<Passenger[]>(this.prefix + "passenger/all");
   }
 
-  get currentPassenger(): Passenger | undefined {
-    return this._currentPassenger;
+  getJuicers(){
+    return this.http.get<Juicer[]>(this.prefix + "juicer/all");
   }
 
-  set currentPassenger(value: Passenger | undefined) {
-    this._currentPassenger = value;
+  get currentUser(): Passenger | Juicer | undefined {
+    return this._currentUser;
+  }
+
+  set currentUser(value: Passenger | Juicer | undefined) {
+    this._currentUser = value;
   }
 
   checkConnect(){
-    if(this.currentPassenger == undefined)
+    if(this.currentUser == undefined)
       this.router.navigate(['login']);
   }
 }

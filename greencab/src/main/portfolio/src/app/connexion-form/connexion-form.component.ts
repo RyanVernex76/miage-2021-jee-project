@@ -3,8 +3,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from '../login.service';
 import {Passenger} from "../../model/Passenger";
 import {firstValueFrom, Observable} from 'rxjs';
-import {addWarning} from "@angular-devkit/build-angular/src/utils/webpack-diagnostics";
 import {Router} from "@angular/router";
+import {Juicer} from "../../model/Juicer";
 
 @Component({
   selector: 'app-connexion-form',
@@ -14,31 +14,39 @@ import {Router} from "@angular/router";
 export class ConnexionFormComponent implements OnInit {
 
   passengers: Passenger[] = [];
+  juicers: Juicer[] = [];
 
   public loginForm = this.fb.group({
       login: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
+      typeUser: ['', Validators.required],
     }
   )
 
   constructor(private fb: FormBuilder, private loginService: LoginService, private router: Router) { }
 
   public async onSubmit(input: any) {
-    let pass:Passenger | null = this.checkCredentials(input.login, input.password);
-
-    if(pass == null){
+    let tab: Array<Passenger> | Array<Juicer> = [];
+    if(input.typeUser == "passenger") {
+      tab = this.passengers;
+    }
+    else if(input.typeUser == "juicer"){
+        tab = this.juicers;
+    }
+    let user:Passenger | Juicer | null = this.checkCredentials(input.login, input.password, tab);
+    if(user == null){
       //show error msg
     }
     else{
-      this.loginService.currentPassenger = pass;
-      this.router.navigate(['passenger/', pass.id]);
+      this.loginService.currentUser = user;
+      this.router.navigate(['passenger/', user.id]);
     }
   }
 
-  private checkCredentials(login: string, password: string){
-    for(let passenger of this.passengers) {
-      if(passenger.emailAddress == login && passenger.password == password){
-        return passenger;
+  private checkCredentials(login: string, password: string, tab:Array<Passenger> | Array<Juicer>){
+    for(let user of tab) {
+      if(user.emailAddress == login && user.password == password){
+        return user;
       }
     }
 
@@ -46,11 +54,14 @@ export class ConnexionFormComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    if(this.loginService.currentPassenger !== undefined)
-      this.router.navigate(['passenger/', this.loginService.currentPassenger.id]);
+    if(this.loginService.currentUser !== undefined)
+      this.router.navigate(['passenger/', this.loginService.currentUser.id]);
 
     let obs$: Observable<Passenger[]> = this.loginService.getPassengers();
     this.passengers = await firstValueFrom(obs$);
+
+    let obs2$: Observable<Juicer[]> = this.loginService.getJuicers();
+    this.juicers = await firstValueFrom(obs2$);
   }
 
 }

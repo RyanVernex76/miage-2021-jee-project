@@ -23,8 +23,8 @@ export class NewFareComponent implements OnInit {
   }
 
   public async onSubmit(input: any) {
-    if (this.loginService.currentPassenger !== undefined){
-      let obs: Observable<Response> = await this.greenCabService.bookFare(this.loginService.currentPassenger.id, input.location);
+    if (this.loginService.currentUser !== undefined){
+      let obs: Observable<Response> = await this.greenCabService.bookFare(this.loginService.currentUser.id, input.location);
       let resp:Response = await firstValueFrom(obs);
 
 
