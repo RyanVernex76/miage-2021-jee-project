@@ -12,6 +12,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FareTableComponent } from './fare-table/fare-table.component';
 import { NewFareComponent } from './new-fare/new-fare.component';
 import { InscriptionPassengerComponent } from './inscription-passenger/inscription-passenger.component';
+import { InscriptionJuicerComponent } from './inscription-juicer/inscription-juicer.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { InscriptionPassengerComponent } from './inscription-passenger/inscripti
     HeaderComponent,
     FareTableComponent,
     NewFareComponent,
-    InscriptionPassengerComponent
+    InscriptionPassengerComponent,
+    InscriptionJuicerComponent
   ],
   imports: [
     BrowserModule,

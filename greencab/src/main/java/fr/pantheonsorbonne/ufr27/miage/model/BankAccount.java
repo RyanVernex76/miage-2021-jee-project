@@ -6,34 +6,15 @@ import javax.persistence.*;
 @Entity
 public class BankAccount {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_id", nullable = false)
-    private Long accountId;
+    private Integer id;
 
-    @Column(name = "IBAN", nullable = false, length = 50)
+    @Column(name = "iban", nullable = false, length = 50)
     private String iban;
 
-    @Column(name = "BIC", length = 15)
+    @Column(name = "bic", length = 15)
     private String bic;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "juicer_id", nullable = false)
-    private Juicer juicer;
-
-    public Long getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(Long accountId) {
-        this.accountId = accountId;
-    }
-
-    public Juicer getJuicer() {
-        return juicer;
-    }
-
-    public void setJuicer(Juicer juicer) {
-        this.juicer = juicer;
-    }
 
     public String getBic() {
         return bic;
@@ -49,5 +30,13 @@ public class BankAccount {
 
     public void setIban(String iban) {
         this.iban = iban;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

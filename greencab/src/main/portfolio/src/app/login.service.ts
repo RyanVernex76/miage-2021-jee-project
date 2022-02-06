@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Passenger } from 'src/model/Passenger';
 import {Router} from "@angular/router";
+import {Juicer} from "../model/Juicer";
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,22 @@ export class LoginService {
       "emailAddress" : pass.emailAddress,
       "password" : pass.password
     });
+  }
+
+  createJuicer(juicer: Juicer){
+    return this.http.post(this.prefix + "juicer/add", {
+      "firstName" : juicer.firstName,
+      "lastName" : juicer.lastName,
+      "phone" : juicer.phone,
+      "emailAddress" : juicer.emailAddress,
+      "password" : juicer.password,
+      "juicerAccount" : {
+          "iban" : juicer.juicer_account.IBAN,
+          "bic" : juicer.juicer_account.BIC
+      }
+    });
+
+
   }
 
   getPassengers(){
