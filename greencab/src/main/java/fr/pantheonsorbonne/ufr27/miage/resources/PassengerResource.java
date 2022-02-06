@@ -20,9 +20,9 @@ import javax.ws.rs.core.Response;
         @Inject
         PassengerService passengerService;
 
-        @Path("")
+        @Path("register")
         @POST
-        public void addPassenger(@QueryParam("passenger") PassengerDTO passengerDTO) {
+        public void register(@QueryParam("passenger") PassengerDTO passengerDTO) {
 
             try{
                     this.passengerService.addNewPassenger(passengerDTO);
@@ -32,8 +32,8 @@ import javax.ws.rs.core.Response;
 
         }
 
-        @Path("")
-        @GET
+        @Path("connection")
+        @POST
         public Response connectPassenger(@QueryParam("connection") ConnectionDTO connectionDTO) {
            try {
                return Response.status(200).entity(passengerService.connectPassenger(connectionDTO)).build();

@@ -10,11 +10,7 @@ public class Passenger {
     @Column(name = "user_id", nullable = false)
     private Integer id;
 
-<<<<<<< HEAD
     public Passenger(int id) {
-=======
-    public Passenger(Integer id){
->>>>>>> c861269d252e2944bb7164dd1445c8d6bd8f6270
         this.id = id;
     }
 
@@ -22,12 +18,8 @@ public class Passenger {
 
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> c861269d252e2944bb7164dd1445c8d6bd8f6270
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Integer id) {

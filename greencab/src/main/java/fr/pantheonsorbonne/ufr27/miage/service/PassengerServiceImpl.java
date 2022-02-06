@@ -6,8 +6,10 @@ import fr.pantheonsorbonne.ufr27.miage.dto.ConnectionDTO;
 import fr.pantheonsorbonne.ufr27.miage.exception.PassengerNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.dto.PassengerDTO;
 import fr.pantheonsorbonne.ufr27.miage.exception.PassengerAlreadyExistException;
-import javax.inject.Inject;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+@ApplicationScoped
 public class PassengerServiceImpl implements PassengerService {
 
     @Inject
