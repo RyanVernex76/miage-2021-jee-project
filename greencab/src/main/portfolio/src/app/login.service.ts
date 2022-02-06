@@ -23,6 +23,10 @@ export class LoginService {
     return this.http.get<Passenger>(this.prefix + "passenger/" + id);
   }
 
+  getJuicer(id: number) {
+    return this.http.get<Juicer>(this.prefix + "juicer/" + id);
+  }
+
   createPassenger(pass: Passenger){
     return this.http.post(this.prefix + "passenger/add", {
       "firstName" : pass.firstName,

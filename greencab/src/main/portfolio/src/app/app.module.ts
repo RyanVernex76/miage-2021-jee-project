@@ -13,6 +13,7 @@ import { FareTableComponent } from './fare-table/fare-table.component';
 import { NewFareComponent } from './new-fare/new-fare.component';
 import { InscriptionPassengerComponent } from './inscription-passenger/inscription-passenger.component';
 import { InscriptionJuicerComponent } from './inscription-juicer/inscription-juicer.component';
+import { JuicerComponent } from './juicer/juicer.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { InscriptionJuicerComponent } from './inscription-juicer/inscription-jui
     FareTableComponent,
     NewFareComponent,
     InscriptionPassengerComponent,
-    InscriptionJuicerComponent
+    InscriptionJuicerComponent,
+    JuicerComponent
   ],
   imports: [
     BrowserModule,

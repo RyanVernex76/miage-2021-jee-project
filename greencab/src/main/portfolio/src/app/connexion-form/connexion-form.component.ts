@@ -39,7 +39,11 @@ export class ConnexionFormComponent implements OnInit {
     }
     else{
       this.loginService.currentUser = user;
-      this.router.navigate(['passenger/', user.id]);
+      if(input.typeUser == "passenger")
+        this.router.navigate(["passenger/", user.id]);
+      else if(input.typeUser == "juicer"){
+        this.router.navigate(["juicer/", user.id]);
+      }
     }
   }
 
