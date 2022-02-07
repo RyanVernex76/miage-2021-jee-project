@@ -43,7 +43,8 @@ export class GreenCabService {
       },
       "juicer": {
         "id" : juicerId
-      }
+      },
+      "state": "waiting"
     });
   }
 

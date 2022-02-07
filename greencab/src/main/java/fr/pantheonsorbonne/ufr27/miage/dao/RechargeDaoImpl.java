@@ -2,7 +2,6 @@ package fr.pantheonsorbonne.ufr27.miage.dao;
 
 import fr.pantheonsorbonne.ufr27.miage.exception.JuicerNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.exception.RechargeNotFoundException;
-import fr.pantheonsorbonne.ufr27.miage.model.Juicer;
 import fr.pantheonsorbonne.ufr27.miage.model.Recharge;
 
 import javax.enterprise.context.ApplicationScoped;

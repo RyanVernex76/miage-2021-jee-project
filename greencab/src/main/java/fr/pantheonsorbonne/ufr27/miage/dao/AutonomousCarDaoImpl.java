@@ -79,7 +79,7 @@ public class AutonomousCarDaoImpl implements  AutonomousCarDao{
     public AutonomousCar[] getNeedRechargeCars() throws CarNotFoundException {
         List cars = em.createQuery("SELECT c from AutonomousCar c" +
                 " where c.needRecharge=true AND c.id" +
-                " not in (SELECT r.car.id from Recharge r)").getResultList();
+                " not in (SELECT r.car.id from Recharge r where r.state='waiting')").getResultList();
         AutonomousCar[] needRechargeCars = new AutonomousCar[cars.size()];
 
         for(int i = 0; i < cars.size(); i++)

@@ -8,14 +8,23 @@ export class Recharge{
   private _juicer: Juicer;
   private _chargingPoint: ChargingPoint | undefined;
   private _cost: number;
+  private _state: string;
 
-  constructor(id: number, car: Car, juicer: Juicer, cost: number) {
+  constructor(id: number, car: Car, juicer: Juicer, cost: number, state:string) {
     this._id = id;
     this._car = car;
     this._juicer = juicer;
     this._cost = cost;
+    this._state = state;
   }
 
+  get state(): string {
+    return this._state;
+  }
+
+  set state(value: string) {
+    this._state = value;
+  }
 
 
   get id(): number {
