@@ -5,6 +5,7 @@ import {LoginService} from "../login.service";
 import {GreenCabService} from "../green-cab.service";
 import {firstValueFrom, Observable} from "rxjs";
 import {Car} from "../../model/Car";
+import {Recharge} from "../../model/Recharge";
 
 @Component({
   selector: 'app-juicer',
@@ -15,6 +16,7 @@ export class JuicerComponent implements OnInit {
 
   juicer: Juicer | undefined;
   carsRecharge: Array<Car> | undefined;
+  recharges: Array<Recharge> | undefined;
 
   constructor(private router: Router, private loginService: LoginService, private greenCabService: GreenCabService, private route: ActivatedRoute) { }
 
@@ -22,6 +24,7 @@ export class JuicerComponent implements OnInit {
     this.loginService.checkConnect();
     this.juicer = await this.getJuicer();
     await this.getCarsRecharge();
+    await this.getRecharges();
   }
 
   private async getJuicer() {
@@ -36,6 +39,13 @@ export class JuicerComponent implements OnInit {
 
     for (let car of this.carsRecharge) {
       car.position = await this.getCarPosition(car.id);
+    }
+  }
+
+  public async getRecharges(){
+    if(this.juicer !== undefined){
+      let obs: Observable<Recharge[]> = this.greenCabService.getRechargeJuicer(this.juicer.id);
+      this.recharges = await firstValueFrom(obs);
     }
   }
 

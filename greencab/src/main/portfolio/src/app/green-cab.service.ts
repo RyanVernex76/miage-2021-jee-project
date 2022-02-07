@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Fare} from "../model/Fare";
 import {Car} from "../model/Car";
+import {Recharge} from "../model/Recharge";
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,10 @@ export class GreenCabService {
 
   public getCarsNeedRecharge(){
     return this.http.get<Car[]>(this.prefix + "car/recharge");
+  }
+
+  public getRechargeJuicer(juicerId: number){
+    return this.http.get<Recharge[]>(this.prefix + "juicer/" + juicerId + "/recharges");
   }
 
   public async bookFare(passengerId: number, location: string) {

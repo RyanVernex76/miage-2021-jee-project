@@ -1,6 +1,8 @@
 package fr.pantheonsorbonne.ufr27.miage.dao;
 
+import fr.pantheonsorbonne.ufr27.miage.exception.JuicerNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.exception.RechargeNotFoundException;
+import fr.pantheonsorbonne.ufr27.miage.model.Juicer;
 import fr.pantheonsorbonne.ufr27.miage.model.Recharge;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -15,6 +17,9 @@ public class RechargeDaoImpl implements RechargeDao{
 
     @Inject
     EntityManager em;
+
+    @Inject
+    JuicerDao juicerDao;
 
     @Override
     @Transactional
@@ -33,10 +38,10 @@ public class RechargeDaoImpl implements RechargeDao{
     }
 
     @Override
-    public Recharge[] getJuicerRecharges(int juicerId) {
+    public Recharge[] getJuicerRecharges(int juicerId) throws JuicerNotFoundException {
         List results = em.createQuery
                 ("SELECT r from Recharge r WHERE r.juicer=:juicer")
-                .setParameter("juicer", juicerId)
+                .setParameter("juicer", juicerDao.getJuicer(juicerId))
                 .getResultList();
         Recharge[] recharges = new Recharge[results.size()];
 

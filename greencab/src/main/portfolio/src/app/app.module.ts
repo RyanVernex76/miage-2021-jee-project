@@ -15,6 +15,7 @@ import { InscriptionPassengerComponent } from './inscription-passenger/inscripti
 import { InscriptionJuicerComponent } from './inscription-juicer/inscription-juicer.component';
 import { JuicerComponent } from './juicer/juicer.component';
 import { CarRechargeComponent } from './car-recharge/car-recharge.component';
+import { CarInChargeComponent } from './car-in-charge/car-in-charge.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { CarRechargeComponent } from './car-recharge/car-recharge.component';
     InscriptionPassengerComponent,
     InscriptionJuicerComponent,
     JuicerComponent,
-    CarRechargeComponent
+    CarRechargeComponent,
+    CarInChargeComponent
   ],
   imports: [
     BrowserModule,

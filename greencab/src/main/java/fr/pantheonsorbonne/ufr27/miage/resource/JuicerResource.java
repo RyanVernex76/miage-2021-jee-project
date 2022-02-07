@@ -49,9 +49,9 @@ public class JuicerResource {
     }
 
     @Path("/{juicerId}/recharges")
-    @POST
+    @GET
     @Consumes({MediaType.APPLICATION_JSON})
-    public Recharge[] getJuicerRecharges(@PathParam("juicerId") int juicerId) {
+    public Recharge[] getJuicerRecharges(@PathParam("juicerId") int juicerId) throws JuicerNotFoundException {
         return this.rechargeDao.getJuicerRecharges(juicerId);
     }
 }
