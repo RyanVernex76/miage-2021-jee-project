@@ -20,5 +20,7 @@ public interface AutonomousCarDao {
 
     AutonomousCar[] getAvailableCars() throws CarNotFoundException;
 
+    AutonomousCar[] getNeedRechargeCars() throws CarNotFoundException;
+
     Position getPosition(int carId);
 }

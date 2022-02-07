@@ -5,7 +5,6 @@ import fr.pantheonsorbonne.ufr27.miage.dao.AutonomousCarDao;
 import fr.pantheonsorbonne.ufr27.miage.dto.CarPosition;
 import fr.pantheonsorbonne.ufr27.miage.dto.Position;
 import fr.pantheonsorbonne.ufr27.miage.exception.CarNotFoundException;
-import fr.pantheonsorbonne.ufr27.miage.model.AutonomousCar;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;

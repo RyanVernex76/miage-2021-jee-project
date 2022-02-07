@@ -7,7 +7,6 @@ import fr.pantheonsorbonne.ufr27.miage.exception.CarNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.model.AutonomousCar;
 import fr.pantheonsorbonne.ufr27.miage.service.CarService;
 import fr.pantheonsorbonne.ufr27.miage.service.FareService;
-import fr.pantheonsorbonne.ufr27.miage.service.GoogleMapService;
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
 
