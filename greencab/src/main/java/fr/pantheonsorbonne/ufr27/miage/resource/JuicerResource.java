@@ -1,12 +1,10 @@
 package fr.pantheonsorbonne.ufr27.miage.resource;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonParser;
 import fr.pantheonsorbonne.ufr27.miage.dao.JuicerDao;
+import fr.pantheonsorbonne.ufr27.miage.dao.RechargeDao;
 import fr.pantheonsorbonne.ufr27.miage.exception.JuicerNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.model.Juicer;
-import org.apache.camel.util.json.JsonObject;
+import fr.pantheonsorbonne.ufr27.miage.model.Recharge;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -17,6 +15,9 @@ public class JuicerResource {
 
     @Inject
     JuicerDao juicerDao;
+
+    @Inject
+    RechargeDao rechargeDao;
 
 
     @Path("/{id}")
@@ -38,5 +39,19 @@ public class JuicerResource {
     @Consumes({MediaType.APPLICATION_JSON})
     public void createJuicer(Juicer j) {
         this.juicerDao.insertNewJuicer(j);
+    }
+
+    @Path("/recharge/add")
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    public void initRecharge(Recharge r) {
+        this.rechargeDao.insertNewRecharge(r);
+    }
+
+    @Path("/{juicerId}/recharges")
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Recharge[] getJuicerRecharges(@PathParam("juicerId") int juicerId) {
+        return this.rechargeDao.getJuicerRecharges(juicerId);
     }
 }

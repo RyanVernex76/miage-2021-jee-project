@@ -4,6 +4,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Fare} from "../model/Fare";
 import {firstValueFrom, Observable} from "rxjs";
 import {Car} from "../model/Car";
+import {Recharge} from "../model/Recharge";
 
 @Injectable({
   providedIn: 'root'
@@ -34,4 +35,16 @@ export class GreenCabService {
     let opt = { responseType: 'text' as 'text' };
       return this.http.get(this.prefix + "position/" + id, opt);
   }
+
+  public initRecharge(carId: number, juicerId: number){
+    return this.http.post(this.prefix + "juicer/recharge/add", {
+      "car": {
+        "id" : carId
+      },
+      "juicer": {
+        "id" : juicerId
+      }
+    });
+  }
+
 }

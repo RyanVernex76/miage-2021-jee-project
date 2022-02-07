@@ -10,31 +10,23 @@ public class Recharge {
     @Column(name = "recharge_id", nullable = false)
     private Integer id;
 
-    @Column(name = "time", nullable = false)
-    private LocalTime time;
-
-    @Column(name = "cost", nullable = false)
+    @Column(name = "cost")
     private Double cost;
+
+    @Column(name = "time")
+    private LocalTime time;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "car_id", nullable = false)
     private AutonomousCar car;
 
+    @ManyToOne
+    @JoinColumn(name = "charging_point_id")
+    private ChargingPoint chargingPoint;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "juicer_id", nullable = false)
     private Juicer juicer;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "charging_point_id", nullable = false)
-    private ChargingPoint chargingPoint;
-
-    public ChargingPoint getChargingPoint() {
-        return chargingPoint;
-    }
-
-    public void setChargingPoint(ChargingPoint chargingPoint) {
-        this.chargingPoint = chargingPoint;
-    }
 
     public Juicer getJuicer() {
         return juicer;
@@ -42,6 +34,14 @@ public class Recharge {
 
     public void setJuicer(Juicer juicer) {
         this.juicer = juicer;
+    }
+
+    public ChargingPoint getChargingPoint() {
+        return chargingPoint;
+    }
+
+    public void setChargingPoint(ChargingPoint chargingPoint) {
+        this.chargingPoint = chargingPoint;
     }
 
     public AutonomousCar getCar() {
@@ -52,20 +52,20 @@ public class Recharge {
         this.car = car;
     }
 
-    public Double getCost() {
-        return cost;
-    }
-
-    public void setCost(Double cost) {
-        this.cost = cost;
-    }
-
     public LocalTime getTime() {
         return time;
     }
 
     public void setTime(LocalTime time) {
         this.time = time;
+    }
+
+    public Double getCost() {
+        return cost;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
     }
 
     public Integer getId() {
