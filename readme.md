@@ -1,40 +1,19 @@
 ## Objectifs du système à modéliser
 
-On souhaite modéliser un système qui met en relation des voitures autonomes et des passagers. Il doit permettre aux passagers de réserver une course pour une destination. Il doit permettre de détecter la présence de voitures disponibles à proximité du passager (dans un périmètre prédéfini) afin de lui attribuer une voiture. Le système doit également permettre aux voitures d’obtenir les informations de la course et du passager qui lui ont été attribués.
+On souhaite modéliser un système qui met en relation des voitures autonomes et des passagers. Il doit permettre aux passagers de réserver une course pour une destination. Le système doit permettre aux voitures d’obtenir les informations de la course et du passager qui lui ont été attribués.
 
 Le rôle du juicer est de récupérer les voitures déchargées pour les recharger dans des bornes de recharge.
 
-Le rôle de la voiture est de sélectionner une course, de se rendre indisponible et de préciser l'endroit de la rencontre au passager. Si la voiture rencontre un problème lors du trajet, elle peut indiquer au passager le temps restant avant de l’atteindre. A la fin de la course, la voiture confirme sa disponibilité pour le prochain passager.
+Le rôle de la voiture est de sélectionner une course, de récupérer le passager et l'emmener vers sa destination. Si la voiture rencontre un problème lors du trajet, elle peut indiquer au passager le temps restant avant de l’atteindre. A la fin de la course, la voiture confirme sa disponibilité pour le prochain passager.
 
 Le rôle du passager est de préciser les critères de sa course. Il doit renseigner sa destination ainsi que l’heure de dépôt. Il est ensuite automatiquement informé de l’arrivée de la voiture par l’application. Après vérification de son identité, il est pris en charge. À la fin de la course, le passager est débité de la somme calculée par le système (en fonction de la distance parcourue) pour la course.
 
 ## Interfaces
 
 ```
-artist->master: POST venue
-vendor->master: GET Gigs
-master->vendor: Collection<Gigs>
+passenger->greencab: POST fare
+greencab->voiture: jms:bookFare
 
-Customer->vendor: cli:gig selection
-
-vendor->master: jms:booking
-alt booking successfull
-    master->vendor: transitional tickets
-    vendor->Customer: ticket purshase ok
-    Customer->vendor: cli:customer informations
-    
-    vendor->master: jms:ticketing
-    master->vendor: tickets
-
-else booking unsuccessfull
-    master->vendor: no quota for gigs
-end
-
-opt venue cancellation
-    artist->master: DELETE venue
-    master->vendor: jms:topic:cancellation
-    vendor->Customer: smtp:cancellation email
-end
 ```
 ## Diagrammes de séquence
 
@@ -58,10 +37,8 @@ end
 * Le passager DOIT renseigner sa destination une fois dans le véhicule.
 * GreenCab DOIT informer le véhicule de la position du passager au moment de la commande (on admet ici que le passager ne se déplace pas en attendant).
 * GreenCab doit alerter UNIQUEMENT les véhicules disponibles.
-* Le système DOIT permettre au passager d’annuler sa course.
-* GreenCab DOIT alerter le véhicule concerné en cas d’annulation.
 * Le Juicer DOIT pouvoir renseigner ses informations bancaires.
-* Le Passager DOIT pouvoir renseigner une ou plusieurs cartes bancaires.
+* Le Passager DOIT pouvoir renseigner une carte bancaire.
 
 ## Exigences non fonctionnelles
 
@@ -70,6 +47,8 @@ end
 
 ## Exigences bonus
 
+* Le système DOIT permettre au passager d’annuler sa course.
+* * GreenCab DOIT alerter le véhicule concerné en cas d’annulation.
 * Si une voiture présente une défaillance, elle DOIT être indisponible le temps des réparations.
 * L’interface affichera la dernière localisation toutes les 30sec. Après 3 requêtes non abouties, on ne l’affiche plus.
 * Les voitures qui doivent être rechargées DOIVENT uniquement notifier les juicers à proximité (implique de connaître leur localisation).
