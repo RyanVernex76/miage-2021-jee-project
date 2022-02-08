@@ -8,6 +8,8 @@ public interface RechargeDao {
 
     void insertNewRecharge(Recharge r);
 
+    void updateFinishedRecharge(Recharge r);
+
     Recharge getRecharge(int id) throws RechargeNotFoundException;
 
     Recharge[] getJuicerRecharges(int juicerId) throws JuicerNotFoundException;

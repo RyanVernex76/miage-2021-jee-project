@@ -55,8 +55,9 @@ public class RechargeServiceImpl implements RechargeService{
             rech.setJuicer(juicerDao.getJuicer(r.getJuicerId()));
             rech.setChargingPoint(chargingPointDao.getChargingPoint(r.getChargintPointId()));
             rech.setCost(r.getCost());
+            rech.setState(r.getState());
 
-            this.rechargeDao.insertNewRecharge(rech);
+            this.rechargeDao.updateFinishedRecharge(rech);
         }catch (CarNotFoundException | JuicerNotFoundException | ChargingPointNotFoundException e){
             e.printStackTrace();
         }

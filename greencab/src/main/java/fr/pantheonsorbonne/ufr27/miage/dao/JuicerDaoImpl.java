@@ -4,6 +4,7 @@ import fr.pantheonsorbonne.ufr27.miage.exception.JuicerNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.model.Juicer;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.control.ActivateRequestContext;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -11,6 +12,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
+@ActivateRequestContext
 public class JuicerDaoImpl implements JuicerDao{
 
     @PersistenceContext(name="mysql")

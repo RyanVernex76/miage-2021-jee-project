@@ -11,6 +11,12 @@ public class Recharge {
 
     public Recharge(){}
 
+    public Recharge(int id, int juicerId, int carId){
+        this.id = id;
+        this.carId = carId;
+        this.juicerId = juicerId;
+    }
+
     public int getId() {
         return id;
     }

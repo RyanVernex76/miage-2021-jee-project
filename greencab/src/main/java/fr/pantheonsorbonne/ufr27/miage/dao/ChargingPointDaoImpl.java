@@ -3,12 +3,14 @@ package fr.pantheonsorbonne.ufr27.miage.dao;
 import fr.pantheonsorbonne.ufr27.miage.exception.ChargingPointNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.model.ChargingPoint;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.control.ActivateRequestContext;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @ApplicationScoped
+@ActivateRequestContext
 public class ChargingPointDaoImpl implements ChargingPointDao{
 
     @PersistenceContext(name="mysql")

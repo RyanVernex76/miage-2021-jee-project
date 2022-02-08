@@ -4,12 +4,14 @@ import fr.pantheonsorbonne.ufr27.miage.exception.PassengerNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.model.Fare;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.control.ActivateRequestContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @ApplicationScoped
+@ActivateRequestContext
 public class FareDaoImpl implements FareDao{
 
     @PersistenceContext(name="mysql")

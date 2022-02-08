@@ -4,6 +4,7 @@ import fr.pantheonsorbonne.ufr27.miage.exception.PassengerNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.model.Passenger;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.control.ActivateRequestContext;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -11,6 +12,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
+@ActivateRequestContext
 public class PassengerDaoImpl implements PassengerDao{
 
     @PersistenceContext(name="mysql")
