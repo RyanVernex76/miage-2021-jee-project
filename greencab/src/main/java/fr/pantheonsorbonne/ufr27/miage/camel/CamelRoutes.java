@@ -52,6 +52,12 @@ public class CamelRoutes extends RouteBuilder {
                 .unmarshal().json(CarPosition.class)//
                 .bean(carHandler, "setAvailable").marshal().json()
         ;
+
+        // Send Recharge object to Borne when Juicer take it in charge
+        from("direct:newRecharge")
+                .marshal().json()
+                .to("jms:" + jmsPrefix + "newRecharge");
+
         /*
         // Receives CarPosition object => notify needRecharge + latest location
         from("jms:" + jmsPrefix + "recharge")//

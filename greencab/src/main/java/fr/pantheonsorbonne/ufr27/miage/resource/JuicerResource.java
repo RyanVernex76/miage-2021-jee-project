@@ -5,6 +5,7 @@ import fr.pantheonsorbonne.ufr27.miage.dao.RechargeDao;
 import fr.pantheonsorbonne.ufr27.miage.exception.JuicerNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.model.Juicer;
 import fr.pantheonsorbonne.ufr27.miage.model.Recharge;
+import fr.pantheonsorbonne.ufr27.miage.service.RechargeService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -18,6 +19,9 @@ public class JuicerResource {
 
     @Inject
     RechargeDao rechargeDao;
+
+    @Inject
+    RechargeService rechargeService;
 
 
     @Path("/{id}")
@@ -46,6 +50,7 @@ public class JuicerResource {
     @Consumes({MediaType.APPLICATION_JSON})
     public void initRecharge(Recharge r) {
         this.rechargeDao.insertNewRecharge(r);
+        this.rechargeService.sendNewRecharge(r);
     }
 
     @Path("/{juicerId}/recharges")
