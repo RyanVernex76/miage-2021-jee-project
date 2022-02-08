@@ -3,6 +3,7 @@ package fr.pantheonsorbonne.ufr27.miage.camel;
 
 import fr.pantheonsorbonne.ufr27.miage.dto.CarPosition;
 import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
+import fr.pantheonsorbonne.ufr27.miage.dto.Recharge;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -19,6 +20,9 @@ public class CamelRoutes extends RouteBuilder {
 
     @Inject
     FareGateway fareHandler;
+
+    @Inject
+    RechargeGateway rechargeGateway;
 
     @Inject
     CarGateway carHandler;
@@ -57,6 +61,11 @@ public class CamelRoutes extends RouteBuilder {
         from("direct:newRecharge")
                 .marshal().json()
                 .to("jms:" + jmsPrefix + "newRecharge");
+
+        from("jms:" + jmsPrefix + "rechargeDone")
+                .unmarshal().json(Recharge.class)
+                .bean(rechargeGateway, "registerRecharge")
+                .marshal().json();
 
         /*
         // Receives CarPosition object => notify needRecharge + latest location
