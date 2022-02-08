@@ -15,8 +15,8 @@ public class CamelRoutes extends RouteBuilder {
     @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.jmsPrefix")
     String jmsPrefix;
 
-    @Inject
-    JuicerGateway juicerHandler;
+//    @Inject
+//    JuicerGateway juicerHandler;
 
     @Inject
     InvoiceGateway invoiceHandler;
