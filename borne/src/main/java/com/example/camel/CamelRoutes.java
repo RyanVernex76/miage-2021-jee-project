@@ -30,9 +30,10 @@ public class CamelRoutes extends RouteBuilder {
                 .unmarshal().json(Recharge.class)
                .bean(rechargeHandler, "onRechargeReceived");
 
+        // Send recharge back to GreenCab
         from("direct:rechargeDone")
                 .marshal().json()
-                        .to("jms:" + jmsPrefix + "rechargeDone");
+                .to("jms:" + jmsPrefix + "rechargeDone");
 
     }
 }

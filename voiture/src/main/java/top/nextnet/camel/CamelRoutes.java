@@ -27,14 +27,6 @@ public class CamelRoutes extends RouteBuilder {
     public void configure() throws Exception {
         camelContext.setTracing(true);
 
-        // Receive fare and treat it
-        from("jms:" + jmsPrefix + "bookFare")//
-                .log("fare received: ${in.headers}")//
-                .unmarshal().json(Fare.class)//
-                .bean(fareHandler, "onFareReceived")
-        ;
-
-
         //Send fare object to greenCab => Charge passenger
         from("direct:fare")//
                 .marshal().json()//
@@ -54,6 +46,13 @@ public class CamelRoutes extends RouteBuilder {
         from("direct:recharge")//
                 .marshal().json()
                 .to("jms:" + jmsPrefix + "carRecharge");
+
+        // Receive fare and treat it
+        from("jms:" + jmsPrefix + "bookFare")//
+                .log("fare received: ${in.headers}")//
+                .unmarshal().json(Fare.class)//
+                .bean(fareHandler, "onFareReceived")
+        ;
 
 
 
