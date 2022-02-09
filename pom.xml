@@ -12,7 +12,6 @@
         <module>borne</module>
         <module>greencab</module>
         <module>greencab-commons</module>
-        <module>juicer</module>
         <module>voiture</module>
     </modules>
 
