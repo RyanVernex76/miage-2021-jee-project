@@ -8,24 +8,25 @@ Le rôle de la voiture est de sélectionner une course, de récupérer le passag
 
 Le rôle du passager est de préciser les critères de sa course. Il doit renseigner sa destination ainsi que l’heure de dépôt. Il est ensuite automatiquement informé de l’arrivée de la voiture par l’application. Après vérification de son identité, il est pris en charge. À la fin de la course, le passager est débité de la somme calculée par le système (en fonction de la distance parcourue) pour la course.
 
-## Interfaces
-
-```
-passenger->greencab: POST fare
-greencab->voiture: jms:bookFare
-
-```
 ## Diagrammes de séquence
 
-![](seqDiagram1.png)
+![](diagramSeqFare.png)
 
-![](seqDiagram2.png)
+![](diagramSeqRecharge.png)
 
-![](seqDiagram3.png)
+## Schémas relationnels
 
-## Schéma relationnel
+GreenCab DB :
 
-![](EER.png)
+![](EER_GreenCab.png)
+
+Voiture DB :
+
+![](EER_Voiture.png)
+
+Borne DB :
+
+![](EER_Borne.png)
 
 ## Exigences fonctionnelles
 
