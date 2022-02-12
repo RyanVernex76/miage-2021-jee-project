@@ -35,11 +35,13 @@ public class FareGateway {
         return fareService.register(fare);
     }
 
-    public void sendFareToAvailableCar(Fare fare){
+    public Fare sendFareToAvailableCar(Fare fare){
         try(ProducerTemplate producer = context.createProducerTemplate()){
             producer.sendBody("direct:bookFare", fare);
+            return fare;
         } catch (IOException e){
             e.printStackTrace();
+            return null;
         }
     }
 
