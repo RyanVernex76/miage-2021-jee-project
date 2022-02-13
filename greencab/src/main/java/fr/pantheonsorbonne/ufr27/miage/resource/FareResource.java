@@ -37,8 +37,8 @@ public class FareResource {
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public void bookFare(@PathParam("idPassenger") int passengerId, @QueryParam("location") String from) throws PassengerNotFoundException {
+    public fr.pantheonsorbonne.ufr27.miage.dto.Fare bookFare(@PathParam("idPassenger") int passengerId, @QueryParam("location") String from) throws PassengerNotFoundException {
         fr.pantheonsorbonne.ufr27.miage.dto.Fare f = new fr.pantheonsorbonne.ufr27.miage.dto.Fare(from, passengerId);
-        this.fareGateway.sendFareToAvailableCar(f);
+        return this.fareGateway.sendFareToAvailableCar(f);
     }
 }

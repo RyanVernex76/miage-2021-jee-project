@@ -1,5 +1,9 @@
 <h1>Book a fare</h1>
 
+<div *ngIf="response" class="alert alert-success" role="alert">
+  Your booking request has been sent! Please wait for a car...
+</div>
+
 <h4>Please fill in your current position</h4>
 <form class="form-inline ms-4" [formGroup]="fareForm" (ngSubmit)="onSubmit(fareForm.value)">
   <input formControlName="location" class="form-control mr-sm-2" type="text"

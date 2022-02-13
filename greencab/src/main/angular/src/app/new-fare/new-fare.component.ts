@@ -3,7 +3,7 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {GreenCabService} from "../green-cab.service";
 import {LoginService} from "../login.service";
 import {firstValueFrom, Observable} from "rxjs";
-import {Passenger} from "../../model/Passenger";
+import {Fare} from "../../model/Fare";
 
 @Component({
   selector: 'app-new-fare',
@@ -11,6 +11,8 @@ import {Passenger} from "../../model/Passenger";
   styleUrls: ['./new-fare.component.scss']
 })
 export class NewFareComponent implements OnInit {
+
+  public response?: Fare;
 
   public fareForm = this.fb.group({
       location: ['', Validators.required],
@@ -24,12 +26,9 @@ export class NewFareComponent implements OnInit {
 
   public async onSubmit(input: any) {
     if (this.loginService.currentUser !== undefined){
-      let obs: Observable<Response> = await this.greenCabService.bookFare(this.loginService.currentUser.id, input.location);
-      let resp:Response = await firstValueFrom(obs);
-
-
+      let obs: Observable<Fare> = this.greenCabService.bookFare(this.loginService.currentUser.id, input.location);
+      this.response = await firstValueFrom(obs);
     }
-
   }
 
 }

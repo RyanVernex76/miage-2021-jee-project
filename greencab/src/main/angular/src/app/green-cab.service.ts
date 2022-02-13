@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Fare} from "../model/Fare";
 import {Car} from "../model/Car";
 import {Recharge} from "../model/Recharge";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +26,8 @@ export class GreenCabService {
     return this.http.get<Recharge[]>(this.prefix + "juicer/" + juicerId + "/recharges");
   }
 
-  public async bookFare(passengerId: number, location: string) {
-    return this.http.post<Response>(this.prefix + "fare/passenger/" + passengerId +
+  public bookFare(passengerId: number, location: string): Observable<Fare> {
+    return this.http.post<Fare>(this.prefix + "fare/passenger/" + passengerId +
       "/newFare?location="+ location,
      []);
   }
