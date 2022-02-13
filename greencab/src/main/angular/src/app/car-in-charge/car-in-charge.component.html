@@ -8,8 +8,9 @@
     <th scope="col">Price</th>
   </tr>
   </thead>
+
   <tbody>
-  <tr *ngFor="let r of recharges">
+  <tr *ngFor="let r of recharges" class="data">
     <th scope="row">{{r.id}}</th>
     <td>{{r.juicer.firstName}}</td>
     <td>{{r.car.licensePlate}}</td>
@@ -17,4 +18,5 @@
     <td>{{r.cost}}</td>
   </tr>
   </tbody>
+
 </table>

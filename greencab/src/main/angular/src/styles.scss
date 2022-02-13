@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+body{
+  background: #e3e3de;
+}
+
+thead {
+  background: #212922;
+}
+
+tbody{
+  background: #e3e3de;
+  border-style: solid;
+  border-color: #212922;
+  border-width: 2px;
+
+}

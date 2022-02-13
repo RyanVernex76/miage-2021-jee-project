@@ -1,19 +1,25 @@
+
+
 <div class="inLine" *ngIf="juicer !== undefined">
+    <div class="profile">
+      <h1>{{juicer.firstName}} {{juicer.lastName}}</h1>
+      <div class="info">
+        <b>Email address :</b> {{juicer.emailAddress}}
+        <br/>
+        <b>Phone number :</b> {{juicer.phone}}
+      </div>
+    </div>
 
-  <div class="inColumn">
-    <h1>{{juicer.firstName}} {{juicer.lastName}}</h1>
-    Email address : {{juicer.emailAddress}}
-    <br/>
-    Phone number : {{juicer.phone}}
-  </div>
-
-  <div class="inColumn">
-    <h3>Cars waiting for recharge: </h3>
-    <app-car-recharge [cars]="carsRecharge"></app-car-recharge>
-
-    <h3>Your recharges : </h3>
-    <app-car-in-charge [recharges]="recharges"></app-car-in-charge>
-  </div>
+    <div class="column">
+      <div class="recharge">
+        <h3>Cars waiting for recharge: </h3>
+        <app-car-recharge [cars]="carsRecharge"></app-car-recharge>
+      </div>
+      <div class="recharge">
+        <h3>Your recharges : </h3>
+        <app-car-in-charge [recharges]="recharges"></app-car-in-charge>
+      </div>
+      </div>
 </div>
 
 

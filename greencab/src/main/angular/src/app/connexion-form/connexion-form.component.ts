@@ -49,6 +49,7 @@ export class ConnexionFormComponent implements OnInit {
 
   private checkCredentials(login: string, password: string, tab:Array<Passenger> | Array<Juicer>){
     for(let user of tab) {
+      console.log(login+" "+user.emailAddress+" "+password+" "+user.password);
       if(user.emailAddress == login && user.password == password){
         return user;
       }

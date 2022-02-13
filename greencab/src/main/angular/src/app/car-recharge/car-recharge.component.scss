@@ -1,0 +1,36 @@
+thead {
+  background: #212922;
+}
+
+tbody{
+  background: #e3e3de;
+  border-style: solid;
+  border-color: #212922;
+  border-width: 2px;
+}
+
+tr,td{
+  color: #e3e3de;
+  font-family: Montserrat, sans-serif;
+  font-size: 16px;
+  margin:4px;
+}
+
+td{
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.col{
+  font-size: 19px !important;
+  font-weight: bold;
+}
+
+.btn{
+  background: #e3e3de;
+  font-weight: 600;
+}
+
+.btn:hover{
+  background: #264e2b;
+}
+

@@ -1,0 +1,42 @@
+.inLine{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 5%;
+}
+
+h1, h3{
+  font-family:"Avenir Next", sans-serif;
+  color :#264e2b ;
+
+}
+.profile{
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  border-style: solid;
+  border-width: thick;
+  border-color: #264e2b;
+  align-items: center;
+  padding: 20px;
+  height: 200px;
+  margin-top: 2%;
+  margin-left: 2% ;
+  color: #212922;
+  box-shadow: rgb(0 0 0 / 30%) 0px 19px 38px, rgb(0 0 0 / 22%) 0px 15px 12px;
+}
+
+.info{
+  margin: 10px;
+  font-family: Montserrat, sans-serif;
+  color: #212922;
+}
+
+
+.column{
+  width:55%
+}
+
+.recharge{
+  margin-bottom: 70px;
+}
+
