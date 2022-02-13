@@ -14,7 +14,8 @@ import {Juicer} from "../../model/Juicer";
 export class ConnexionFormComponent implements OnInit {
 
   passengers: Passenger[] = [];
-  juicers: Juicer[] = [];
+  juicers: Juicer[] = []
+  wrong: boolean = false;
 
   public loginForm = this.fb.group({
       login: ['', Validators.required],
@@ -35,7 +36,7 @@ export class ConnexionFormComponent implements OnInit {
     }
     let user:Passenger | Juicer | null = this.checkCredentials(input.login, input.password, tab);
     if(user == null){
-      //show error msg
+      this.wrong = true;
     }
     else{
       this.loginService.currentUser = user;

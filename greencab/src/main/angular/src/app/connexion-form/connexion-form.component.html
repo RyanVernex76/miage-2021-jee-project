@@ -9,6 +9,10 @@
       <div class="subtitle">The new green way to cruise</div>
     </div>
 
+   <div *ngIf="wrong" class="alert alert-danger" role="alert">
+     Wrong credentials ! Please try again
+   </div>
+
     <div class="form-container">
       <h2>Login</h2>
         <form class="form-inline ms-4" [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
