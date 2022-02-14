@@ -12,4 +12,6 @@ public interface UserInterface {
     int getCarId();
 
     int getAmountToCharge();
+
+    void exit();
 }

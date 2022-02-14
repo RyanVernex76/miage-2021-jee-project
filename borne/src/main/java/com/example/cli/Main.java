@@ -45,6 +45,8 @@ public class Main implements Runnable{
         catch(Exception e)
         {
            e.printStackTrace();
+        }finally {
+            borneInterface.exit();
         }
     }
 }

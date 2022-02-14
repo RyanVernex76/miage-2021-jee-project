@@ -161,4 +161,11 @@ public class UserInterfaceCLIImpl implements UserInterfaceCLI{
         return false;
     }
 
+    @Override
+    public void exit(){
+        terminal.println("Press ENTER key to exit.");
+        terminal.read(true);
+        System.exit(0);
+    }
+
 }
