@@ -28,13 +28,8 @@ public class CarServiceImpl implements CarService{
         try{
             this.carDao.setAvailable(car.getCarId());
             this.carDao.setCarPosition(car);
-        }catch (CarNotFoundException e){
-            this.carDao.insertNewCar(car.getCarId());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ApiException e) {
+        }catch (CarNotFoundException | IOException |
+                ApiException | InterruptedException e) {
             e.printStackTrace();
         }
 
@@ -43,8 +38,14 @@ public class CarServiceImpl implements CarService{
 
     @Override
     public CarPosition notifyRecharge(CarPosition car) {
-        // TO IMPLEMENT
-        return null;
+        try{
+            this.carDao.setNeedRecharge(car.getCarId(), true);
+            this.carDao.setCarPosition(car);
+        }catch (CarNotFoundException | IOException |
+                ApiException | InterruptedException e){
+            e.printStackTrace();
+        }
+        return car;
     }
 
     @Override

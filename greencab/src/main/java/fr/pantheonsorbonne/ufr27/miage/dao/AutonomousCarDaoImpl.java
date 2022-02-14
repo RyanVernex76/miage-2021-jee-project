@@ -89,6 +89,19 @@ public class AutonomousCarDaoImpl implements  AutonomousCarDao{
     }
 
     @Override
+    @Transactional
+    public void setNeedRecharge(int carId, boolean need) throws CarNotFoundException {
+        try{
+            AutonomousCar c = em.find(AutonomousCar.class, carId);
+            c.setNeedRecharge(need);
+            em.persist(c);
+
+        } catch (NoResultException e){
+            throw new CarNotFoundException(carId);
+        }
+    }
+
+    @Override
     public Position getPosition(int carId) {
         PositionableElement pe = em.find(PositionableElement.class, carId);
         return new Position(pe.getLatitude(), pe.getLongitude());

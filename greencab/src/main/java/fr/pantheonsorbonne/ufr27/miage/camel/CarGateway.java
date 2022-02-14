@@ -17,6 +17,6 @@ public class CarGateway {
     }
 
     public CarPosition notifyRecharge(CarPosition car){
-        return carService.notifyRecharge(car);
+        return this.carService.notifyRecharge(car);
     }
 }

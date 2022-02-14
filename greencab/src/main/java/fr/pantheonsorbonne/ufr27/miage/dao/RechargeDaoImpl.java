@@ -30,7 +30,6 @@ public class RechargeDaoImpl implements RechargeDao{
 
     @Transactional
     public void updateFinishedRecharge(Recharge r){
-        System.out.println("state :" +r.getState());
         em.createQuery("UPDATE Recharge r" +
                         " SET r.cost = :cost, " +
                         " r.state = :state," +

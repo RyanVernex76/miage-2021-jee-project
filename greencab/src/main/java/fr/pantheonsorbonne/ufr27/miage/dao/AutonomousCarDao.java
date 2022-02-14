@@ -22,5 +22,7 @@ public interface AutonomousCarDao {
 
     AutonomousCar[] getNeedRechargeCars() throws CarNotFoundException;
 
+    void setNeedRecharge(int carId, boolean need) throws CarNotFoundException;
+
     Position getPosition(int carId);
 }
