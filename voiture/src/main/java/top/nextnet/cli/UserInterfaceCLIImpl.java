@@ -135,5 +135,14 @@ public class UserInterfaceCLIImpl implements UserInterfaceCLI {
         return choice;
     }
 
+    @Override
+    public boolean stop() {
+        terminal.println("Do you want to handle an other fare or stop ?");
+        String input = textIO.newStringInputReader()
+                .withPossibleValues("Continue", "Stop")
+                .read("Choice");
+        return input == "Stop";
+    }
+
 
 }

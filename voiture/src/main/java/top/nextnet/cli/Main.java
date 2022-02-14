@@ -1,9 +1,6 @@
 package top.nextnet.cli;
 
 import com.google.maps.errors.ApiException;
-import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
-import org.apache.camel.CamelContext;
-import org.apache.camel.ProducerTemplate;
 import org.beryx.textio.TextIO;
 import org.beryx.textio.TextIoFactory;
 import picocli.CommandLine.Command;
@@ -19,9 +16,6 @@ import java.io.IOException;
 
 @Command(name = "greeting", mixinStandardHelpOptions = true)
 public class Main implements Runnable {
-
-    @Inject
-    CamelContext context;
 
     @Inject
     FareService fareService;
@@ -47,11 +41,16 @@ public class Main implements Runnable {
                 FareWaiting f = cli.chooseFareToHandle(fares, c);
                 fareService.handleFare(f, c);
                 fareDao.removeFareFromQueue(f);
+                if(cli.stop())
+                    break;
             }
         }catch (CarNotFoundException e){
+            cli.showErrorMessage(e.getMessage());
             e.printStackTrace();
         } catch (ApiException | IOException | InterruptedException e) {
             e.printStackTrace();
+        }finally {
+            System.exit(0);
         }
     }
 

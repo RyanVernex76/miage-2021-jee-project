@@ -24,4 +24,5 @@ public interface UserInterface {
 
     FareWaiting chooseFareToHandle(FareWaiting[] fares, Car c) throws IOException, InterruptedException, ApiException;
 
+    boolean stop();
 }
