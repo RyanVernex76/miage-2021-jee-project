@@ -10,6 +10,8 @@ import java.io.IOException;
 public interface UserInterface {
     void showErrorMessage(String errorMessage);
 
+    void exit();
+
     void showSuccessMessage(String s);
 
     void showInfoMessage(String infoMessage);

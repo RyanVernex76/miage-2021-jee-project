@@ -46,11 +46,10 @@ public class Main implements Runnable {
             }
         }catch (CarNotFoundException e){
             cli.showErrorMessage(e.getMessage());
-            e.printStackTrace();
         } catch (ApiException | IOException | InterruptedException e) {
             e.printStackTrace();
         }finally {
-            System.exit(0);
+            cli.exit();
         }
     }
 
