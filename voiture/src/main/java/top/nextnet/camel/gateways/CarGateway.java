@@ -1,4 +1,4 @@
-package top.nextnet.service;
+package top.nextnet.camel.gateways;
 
 import com.google.maps.errors.ApiException;
 import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
@@ -22,6 +22,6 @@ public interface CarGateway {
 
     Car getCar(int carId) throws CarNotFoundException;
 
-    public void calculateDistanceCarPassenger(DistanceCarFare dcf) throws IOException, InterruptedException, ApiException;
+    void calculateDistanceCarPassenger(DistanceCarFare dcf) throws IOException, InterruptedException, ApiException;
 
 }

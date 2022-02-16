@@ -25,7 +25,7 @@ public class FareHandler {
         carDao.updateCurrentKm(f.getCarId(), f.getDistance());
     }
 
-    public void onFareReceived(Exchange exchange) throws InterruptedException {
+    public void onFareReceived(Exchange exchange) {
         Fare f = exchange.getMessage().getBody(Fare.class);
 
         FareWaiting fw = new FareWaiting(f.getPassengerId(), f.getDeparture(), f.getDate());

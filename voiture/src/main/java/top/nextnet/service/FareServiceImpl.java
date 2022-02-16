@@ -3,6 +3,7 @@ package top.nextnet.service;
 import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
 import org.beryx.textio.TextIO;
 import org.beryx.textio.TextIoFactory;
+import top.nextnet.camel.gateways.CarGateway;
 import top.nextnet.cli.RunnerData;
 import top.nextnet.cli.UserInterfaceCLI;
 import top.nextnet.model.Car;

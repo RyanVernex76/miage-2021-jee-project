@@ -7,7 +7,7 @@ import top.nextnet.exception.CarNotFoundException;
 import top.nextnet.model.Car;
 import top.nextnet.model.DistanceCarFare;
 import top.nextnet.model.FareWaiting;
-import top.nextnet.service.CarGateway;
+import top.nextnet.camel.gateways.CarGateway;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.awt.*;

@@ -11,7 +11,6 @@ import top.nextnet.model.Car;
 import top.nextnet.model.DistanceCarFare;
 import top.nextnet.model.FareInfo;
 import top.nextnet.service.GoogleMapService;
-import top.nextnet.service.CarGateway;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
