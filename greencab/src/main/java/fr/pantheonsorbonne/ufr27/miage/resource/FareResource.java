@@ -1,6 +1,6 @@
 package fr.pantheonsorbonne.ufr27.miage.resource;
 
-import fr.pantheonsorbonne.ufr27.miage.camel.FareGateway;
+import fr.pantheonsorbonne.ufr27.miage.camel.gateways.FareGateway;
 import fr.pantheonsorbonne.ufr27.miage.dao.FareDao;
 import fr.pantheonsorbonne.ufr27.miage.exception.PassengerNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.model.Fare;

@@ -1,6 +1,9 @@
 package fr.pantheonsorbonne.ufr27.miage.camel;
 
 
+import fr.pantheonsorbonne.ufr27.miage.camel.gateways.CarGateway;
+import fr.pantheonsorbonne.ufr27.miage.camel.gateways.FareGateway;
+import fr.pantheonsorbonne.ufr27.miage.camel.gateways.RechargeGateway;
 import fr.pantheonsorbonne.ufr27.miage.dto.CarPosition;
 import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
 import fr.pantheonsorbonne.ufr27.miage.dto.Recharge;
@@ -39,7 +42,7 @@ public class CamelRoutes extends RouteBuilder {
         from("direct:bookFare")//
                 .log("fare sent to cars: ${in.headers}")//
                 .marshal().json()
-                .to("jms:" + jmsPrefix + "bookFare");
+                .to("jms:" + jmsPrefix + "bookFare")
         ;
 
         // Send Recharge object to Borne when Juicer take it in charge

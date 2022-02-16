@@ -1,12 +1,10 @@
 package fr.pantheonsorbonne.ufr27.miage.dao;
 
-import com.google.maps.errors.ApiException;
 import fr.pantheonsorbonne.ufr27.miage.dto.CarPosition;
 import fr.pantheonsorbonne.ufr27.miage.dto.Position;
 import fr.pantheonsorbonne.ufr27.miage.exception.CarNotFoundException;
+import fr.pantheonsorbonne.ufr27.miage.exception.ElementNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.model.AutonomousCar;
-
-import java.io.IOException;
 
 public interface AutonomousCarDao {
 
@@ -14,9 +12,7 @@ public interface AutonomousCarDao {
 
     void setAvailable(int carId) throws CarNotFoundException;
 
-    void insertNewCar(int carId);
-
-    void setCarPosition(CarPosition carPos) throws IOException, InterruptedException, ApiException;
+    void setCarPosition(CarPosition carPos) throws ElementNotFoundException;
 
     AutonomousCar[] getAvailableCars() throws CarNotFoundException;
 
@@ -24,5 +20,5 @@ public interface AutonomousCarDao {
 
     void setNeedRecharge(int carId, boolean need) throws CarNotFoundException;
 
-    Position getPosition(int carId);
+    Position getPosition(int carId) throws ElementNotFoundException;
 }

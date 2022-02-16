@@ -1,4 +1,4 @@
-package fr.pantheonsorbonne.ufr27.miage.camel;
+package fr.pantheonsorbonne.ufr27.miage.camel.gateways;
 
 import fr.pantheonsorbonne.ufr27.miage.dao.AutonomousCarDao;
 import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
@@ -37,11 +37,10 @@ public class FareGateway {
     public Fare sendFareToAvailableCar(Fare fare){
         try(ProducerTemplate producer = context.createProducerTemplate()){
             producer.sendBody("direct:bookFare", fare);
-            return fare;
         } catch (IOException e){
             e.printStackTrace();
-            return null;
         }
+        return fare;
     }
 
     public boolean checkFarePossible(Fare f) throws CarNotFoundException {

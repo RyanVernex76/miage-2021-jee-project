@@ -1,4 +1,4 @@
-package fr.pantheonsorbonne.ufr27.miage.camel;
+package fr.pantheonsorbonne.ufr27.miage.camel.gateways;
 
 import fr.pantheonsorbonne.ufr27.miage.dto.CarPosition;
 import fr.pantheonsorbonne.ufr27.miage.service.CarService;

@@ -1,9 +1,9 @@
 package fr.pantheonsorbonne.ufr27.miage.dao;
 
-import com.google.maps.errors.ApiException;
 import fr.pantheonsorbonne.ufr27.miage.dto.CarPosition;
 import fr.pantheonsorbonne.ufr27.miage.dto.Position;
 import fr.pantheonsorbonne.ufr27.miage.exception.CarNotFoundException;
+import fr.pantheonsorbonne.ufr27.miage.exception.ElementNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.model.AutonomousCar;
 import fr.pantheonsorbonne.ufr27.miage.model.PositionableElement;
 import fr.pantheonsorbonne.ufr27.miage.service.GoogleMapService;
@@ -15,7 +15,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.io.IOException;
 import java.util.List;
 
 @ApplicationScoped
@@ -31,8 +30,7 @@ public class AutonomousCarDaoImpl implements  AutonomousCarDao{
     @Override
     public AutonomousCar getCar(int carId) throws CarNotFoundException {
         try{
-            AutonomousCar c = em.find(AutonomousCar.class, carId);
-            return c;
+            return em.find(AutonomousCar.class, carId);
         }
         catch (NoResultException e){
             throw new CarNotFoundException(carId);
@@ -49,19 +47,19 @@ public class AutonomousCarDaoImpl implements  AutonomousCarDao{
 
     @Override
     @Transactional
-    public void insertNewCar(int carId) {
-        AutonomousCar newCar = new AutonomousCar(carId, true, "XX-" + carId + "-CAB");
-    }
+    public void setCarPosition(CarPosition carPos) throws ElementNotFoundException {
+        try{
+            PositionableElement pe = em.find(PositionableElement.class, carPos.getCarId());
+            Position newLoc = maps.getTranslatedCoordonates(carPos.getPosition());
+            pe.setLatitude(newLoc.getLat());
+            pe.setLongitude(newLoc.getLon());
 
-    @Override
-    @Transactional
-    public void setCarPosition(CarPosition carPos) throws IOException, InterruptedException, ApiException {
-        PositionableElement pe = em.find(PositionableElement.class, carPos.getCarId());
-        Position newLoc = maps.getTranslatedCoordonates(carPos.getPosition());
-        pe.setLatitude(newLoc.getLat());
-        pe.setLongitude(newLoc.getLon());
+            em.persist(pe);
+        }catch (NoResultException e){
+            throw new ElementNotFoundException(carPos.getCarId());
+        }
 
-        em.persist(pe);
+
     }
 
     @Override
@@ -102,9 +100,13 @@ public class AutonomousCarDaoImpl implements  AutonomousCarDao{
     }
 
     @Override
-    public Position getPosition(int carId) {
-        PositionableElement pe = em.find(PositionableElement.class, carId);
-        return new Position(pe.getLatitude(), pe.getLongitude());
+    public Position getPosition(int carId) throws ElementNotFoundException {
+        try{
+            PositionableElement pe = em.find(PositionableElement.class, carId);
+            return new Position(pe.getLatitude(), pe.getLongitude());
+        }catch (NoResultException e){
+            throw new ElementNotFoundException(carId);
+        }
     }
 
 
