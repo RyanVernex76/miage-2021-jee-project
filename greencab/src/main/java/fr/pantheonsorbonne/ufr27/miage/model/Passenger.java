@@ -24,6 +24,18 @@ public class Passenger {
     @Column(name = "password", length = 50)
     private String password;
 
+    @OneToOne(optional = false)
+    @JoinColumn(name = "passenger_card", nullable = false)
+    private Card passengerCard;
+
+    public Card getPassengerCard() {
+        return passengerCard;
+    }
+
+    public void setPassengerCard(Card passengerCard) {
+        this.passengerCard = passengerCard;
+    }
+
     public String getPassword() {
         return password;
     }

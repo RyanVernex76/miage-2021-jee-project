@@ -15,18 +15,6 @@ public class Card {
     @Column(name = "CVV", length = 3)
     private String cvv;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "passenger_id", nullable = false)
-    private Passenger passenger;
-
-    public Passenger getPassenger() {
-        return passenger;
-    }
-
-    public void setPassenger(Passenger passenger) {
-        this.passenger = passenger;
-    }
-
     public String getCvv() {
         return cvv;
     }
