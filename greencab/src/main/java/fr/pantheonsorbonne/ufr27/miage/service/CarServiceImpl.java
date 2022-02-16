@@ -49,7 +49,7 @@ public class CarServiceImpl implements CarService{
     }
 
     @Override
-    public boolean checkDistance(int carId, String dest) throws IOException, InterruptedException, ApiException {
+    public boolean checkDistance(int carId, String dest) {
         Position carCurrentPosition = carDao.getPosition(carId);
         double distance = maps.getDistance(maps.getAddress(carCurrentPosition), dest);
 

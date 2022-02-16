@@ -1,6 +1,5 @@
 package fr.pantheonsorbonne.ufr27.miage.camel;
 
-import com.google.maps.errors.ApiException;
 import fr.pantheonsorbonne.ufr27.miage.dao.AutonomousCarDao;
 import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
 import fr.pantheonsorbonne.ufr27.miage.exception.CarNotFoundException;
@@ -45,7 +44,7 @@ public class FareGateway {
         }
     }
 
-    public boolean checkFarePossible(Fare f) throws CarNotFoundException, IOException, InterruptedException, ApiException {
+    public boolean checkFarePossible(Fare f) throws CarNotFoundException {
         AutonomousCar[] cars = carDao.getAvailableCars();
         // return false if no car are available for the fare
         if(cars.length < 1)
