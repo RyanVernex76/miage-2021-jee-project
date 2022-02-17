@@ -82,5 +82,9 @@ export class UserOptionComponent implements OnInit {
     this.hide = !this.hide;
   }
 
+  public logOut(){
+    this.loginService.currentUser = undefined;
+  }
+
 }
 
