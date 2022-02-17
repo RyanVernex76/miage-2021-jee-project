@@ -1,12 +1,17 @@
-<h1>Book a fare</h1>
+<div class="container">
+  <div class="content">
+    <h1>Book a fare</h1>
 
-<div *ngIf="response" class="alert alert-success" role="alert">
-  Your booking request has been sent! Please wait for a car...
+    <div *ngIf="response" class="alert alert-success" role="alert">
+      Your booking request has been sent! Please wait for a car...
+    </div>
+
+    <h4>Please fill in your current position</h4>
+    <form class="form-inline ms-4" [formGroup]="fareForm" (ngSubmit)="onSubmit(fareForm.value)">
+      <input formControlName="location" class="form-control mr-sm-2" type="text"
+             placeholder="Your position" aria-label="Search">
+      <button class="btn btn-outline-secondary my-2 my-sm-0 ms-2" type="submit">Book</button>
+    </form>
+  </div>
+
 </div>
-
-<h4>Please fill in your current position</h4>
-<form class="form-inline ms-4" [formGroup]="fareForm" (ngSubmit)="onSubmit(fareForm.value)">
-  <input formControlName="location" class="form-control mr-sm-2" type="text"
-         placeholder="Your position" aria-label="Search">
-  <button class="btn btn-outline-secondary my-2 my-sm-0 ms-2" type="submit">Book</button>
-</form>

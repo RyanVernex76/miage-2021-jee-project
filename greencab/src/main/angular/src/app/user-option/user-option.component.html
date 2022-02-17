@@ -1,20 +1,29 @@
-<form [formGroup]="passwordForm" (ngSubmit)="onSubmit(passwordForm.value)">
-	<input formControlName="oldPassword" type="password" id="oldPassword" class="form-control form-control-lg" [(ngModel)]="oldPassword"/>
-    <label class="form-label" for="oldPassword">Current password</label>
-	<p *ngIf="!this.oldPasswordOk">Invalid password.</p>
+<div class="container">
 
-	<input formControlName="newPassword" type="password" id="newPassword" class="form-control form-control-lg" [(ngModel)]="newPassword">
-    <label class="form-label" for="newPassword">New password</label>
+  <div class="change">
+    <button class="btn" (click)="toggle()" >Change password ?</button>
+    <form *ngIf="!hide" [formGroup]="passwordForm" (ngSubmit)="onSubmit(passwordForm.value)">
+      <input formControlName="oldPassword" type="password" id="oldPassword" class="form-control form-control-lg" [(ngModel)]="oldPassword"/>
+        <label class="form-label" for="oldPassword">Current password</label>
+      <p *ngIf="!this.oldPasswordOk">Invalid password.</p>
 
-	<input (blur)="this.passwordConfInputUnfocus = true" formControlName="newPasswordConfirmation" type="password" id="newPasswordConfirmation" class="form-control form-control-lg" [(ngModel)]="newPasswordConfirmation" />
-    <label class="form-label" for="newPasswordConfirmation">Confirm the new passsword</label>
-	<p *ngIf="this.passwordConfInputUnfocus && !this.checkPasswordConfirmation()">Passwords are not matching.</p>
-	<button type="submit">Change password</button>
-</form>
+      <input formControlName="newPassword" type="password" id="newPassword" class="form-control form-control-lg" [(ngModel)]="newPassword">
+        <label class="form-label" for="newPassword">New password</label>
 
-<button (click)="this.displayDeleteAccountConfirmation = true">Delete my account</button>
-<div *ngIf="this.displayDeleteAccountConfirmation">
-	<span>Are you sure to want to delete your account ?</span>
-	<button (click)="this.deleteAccount()">Yes</button>
-	<button (click)="this.displayDeleteAccountConfirmation = false">No</button>
+      <input (blur)="this.passwordConfInputUnfocus = true" formControlName="newPasswordConfirmation" type="password" id="newPasswordConfirmation" class="form-control form-control-lg" [(ngModel)]="newPasswordConfirmation" />
+        <label class="form-label" for="newPasswordConfirmation">Confirm new password</label>
+      <p *ngIf="this.passwordConfInputUnfocus && !this.checkPasswordConfirmation()">Passwords are not matching.</p>
+      <button class="btn" type="submit">Change password</button>
+    </form>
+  </div>
+
+  <button class="btn" (click)="this.displayDeleteAccountConfirmation = true">Delete my account</button>
+  <div class="del" *ngIf="this.displayDeleteAccountConfirmation">
+    <span>Are you sure you want to delete your account ?</span>
+    <div class="delbtns">
+      <button class="btn"(click)="this.deleteAccount()">Yes</button>
+      <button class="btn" (click)="this.displayDeleteAccountConfirmation = false">No</button>
+    </div>
+  </div>
+
 </div>

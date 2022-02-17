@@ -9,6 +9,12 @@ h1, h3{
   color :#264e2b ;
 
 }
+
+.profile-container{
+  display: flex;
+  flex-flow: column;
+}
+
 .profile{
   display: flex;
   flex-direction: column;

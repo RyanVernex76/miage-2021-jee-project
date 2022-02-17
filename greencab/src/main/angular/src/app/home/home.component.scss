@@ -1,0 +1,132 @@
+
+.full{
+  margin-top: 10%;
+}
+
+.title{
+  height: 20vh;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.greencab {
+  color: #264e2b;
+  position: relative;
+  font-family: "Avenir Next", sans-serif;
+  font-weight: 900;
+  font-size: 65px;
+  text-transform: uppercase;
+  font-style: italic;
+  letter-spacing: 0.05em;
+  display: inline-block;
+}
+
+.subtitle{
+  color: #212922;
+  font-family: Montserrat, sans-serif;
+  font-weight: 300;
+  font-size: 19px;
+  margin-top: -15px;
+}
+
+span:before {
+  position: absolute;
+  top: 0;
+  content: attr(filter-content);
+  filter: url(#motion-blur-filter);
+}
+
+svg {
+  display: none;
+}
+
+.btn-title{
+  text-align: center;
+  margin-top: 3%;
+  color: #212922;
+  font-family: Montserrat, sans-serif;
+  font-weight: 600;
+  font-size: 23px;
+}
+
+.buttons {
+  margin-top: 5%;
+  display: flex;
+  flex-flow: row;
+  justify-content: center ;
+}
+
+.buttons .button {
+  cursor: pointer;
+  --c: #212922;
+  color: var(--c);
+  font-size: 16px;
+  border: 0.2em solid var(--c);
+  border-radius: 0.5em;
+  width: 12em;
+  height: 3em;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-family: sans-serif;
+  letter-spacing: 0.1em;
+  text-align: center;
+  line-height: 2.6em;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: 0.5s;
+  margin: 1em;
+}
+
+.buttons .button span {
+  position: absolute;
+  width: 25%;
+  height: 100%;
+  background-color: var(--c);
+  transform: translateY(150%);
+  border-radius: 50%;
+  left: calc((var(--n) - 1) * 25%);
+  transition: 0.5s;
+  transition-delay: calc((var(--n) - 1) * 0.1s);
+  z-index: -1;
+}
+
+.buttons .button:hover {
+  color: #e3e3de;
+}
+
+.buttons .button:hover span {
+  transform: translateY(0) scale(2);
+}
+
+.buttons .button span:nth-child(1) {
+  --n: 1;
+}
+
+.buttons .button span:nth-child(2) {
+  --n: 2;
+}
+
+.buttons .button span:nth-child(3) {
+  --n: 3;
+}
+
+.buttons .button span:nth-child(4) {
+  --n: 4;
+}
+
+
+.alt{
+  text-align: center;
+  margin-top: 1%;
+  color: #264e2b;
+  font-family: Montserrat, sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+}
+a{
+  color:#212922 !important;
+  font-weight: bold;
+}

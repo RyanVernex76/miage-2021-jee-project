@@ -1,21 +1,25 @@
 
 <div class="inLine" *ngIf="passenger !== undefined">
 
-  <div class="inColumn">
-    <h1>{{passenger.firstName}} {{passenger.lastName}}</h1>
-    Email address : {{passenger.emailAddress}}
-    <br/>
-    Phone number : {{passenger.phone}}
+  <div class="profile-container">
+    <div class="profile">
+      <div class="info">
+        <h1>{{passenger.firstName}} {{passenger.lastName}}</h1>
+        Email address : {{passenger.emailAddress}}
+        <br/>
+        Phone number : {{passenger.phone}}
+      </div>
+    </div>
+    <app-user-option [user]="this.passenger" [userType]="'passenger'"></app-user-option>
   </div>
 
-  <div class="inColumn">
+  <div class="column">
     <h3>Your previous fares : </h3>
     <app-fare-table [fares]="passengerFares"></app-fare-table>
+    <button class="btn btn-outline-secondary my-2 my-sm-0 ms-2" (click)="redirectBook(passenger.id)">Book a fare</button>
   </div>
-
-  <button class="btn btn-outline-secondary my-2 my-sm-0 ms-2" (click)="redirectBook(passenger.id)">Book a fare</button>
 </div>
-<app-user-option [user]="this.passenger" [userType]="'passenger'"></app-user-option>
+
 
 
 

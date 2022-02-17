@@ -28,7 +28,7 @@ export class NewFareComponent implements OnInit {
     if (this.loginService.currentUser !== undefined){
       let obs: Observable<Fare> = this.greenCabService.bookFare(this.loginService.currentUser.id, input.location);
       this.response = await firstValueFrom(obs);
-	}
+    }
   }
 
 }

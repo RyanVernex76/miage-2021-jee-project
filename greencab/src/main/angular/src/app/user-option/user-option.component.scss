@@ -1,0 +1,36 @@
+.container{
+  display: flex;
+  flex-flow: column;
+  margin-top: 5%;
+}
+.change{
+  display: flex;
+  flex-flow: column;
+}
+
+form{
+  margin: 6%;
+}
+
+.btn{
+  margin: 1%;
+  color:#e3e3de;
+  background: #212922;
+  font-family: Montserrat, sans-serif;
+}
+
+.btn:hover{
+  background: #264e2b;
+}
+
+.delbtns{
+  display: flex;
+  flex-flow: row;
+}
+
+.del{
+  margin:3%;
+  display: flex;
+  flex-flow: column;
+}
+

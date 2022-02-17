@@ -1,5 +1,5 @@
 import { INFERRED_TYPE } from '@angular/compiler/src/output/output_ast';
-import { Component, OnInit , Input} from '@angular/core';
+import {Component, OnInit, Input, ViewChild, ElementRef} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { firstValueFrom, Observable } from 'rxjs';
@@ -28,6 +28,9 @@ export class UserOptionComponent implements OnInit {
   public newPassword !: string;
   public newPasswordConfirmation : string = '';
 
+  @ViewChild('toggleBtn') toggleBtn!: ElementRef;
+
+  public hide: boolean = true;
 
   ngOnInit(): void {
 	  this.init_form();
@@ -73,6 +76,10 @@ export class UserOptionComponent implements OnInit {
 		return newPassword === newPasswordConfirmation;
 	  }
 	  return false;
+  }
+
+  public toggle(){
+    this.hide = !this.hide;
   }
 
 }
