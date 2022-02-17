@@ -49,4 +49,8 @@ export class GreenCabService {
     });
   }
 
+  public sendEmail(id: number){
+	  return this.http.get(this.prefix + "mail/passenger/" + id);
+  }
+
 }
