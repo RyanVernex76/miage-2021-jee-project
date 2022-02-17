@@ -44,4 +44,36 @@ public class PassengerDaoImpl implements PassengerDao{
     public void insertNewPassenger(Passenger p) {
         em.persist(p);
     }
+
+
+    @Override
+    @Transactional
+    public void deletePassenger(int id) throws PassengerNotFoundException {
+        em.createQuery("delete from Fare f where f.passenger=:id")
+                .setParameter("id", this.getPassenger(id))
+                .executeUpdate();
+        em.createQuery("delete from Card c where c.passenger=:id")
+                .setParameter("id", this.getPassenger(id))
+                .executeUpdate();
+        int isSuccessful = em.createQuery("delete from Passenger p where p.id=:id")
+                .setParameter("id", this.getPassenger(id).getId())
+                .executeUpdate();
+        if (isSuccessful == 0){
+            throw new PassengerNotFoundException(id);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void changePassengerPassword(int id, String newPassword) throws PassengerNotFoundException{
+        try{
+            this.getPassenger(id);
+        } catch(PassengerNotFoundException e){
+            throw e;
+        }
+        em.createQuery("update Passenger p set p.password=:newPassword where p.id=:id")
+                .setParameter("newPassword", newPassword)
+                .setParameter("id", id)
+                .executeUpdate();
+    }
 }
