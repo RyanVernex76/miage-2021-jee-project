@@ -1,0 +1,49 @@
+.container{
+  display: flex;
+  flex-flow: column;
+  width:60%;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  background-color: #212922;
+  color:#e3e3de;
+  margin-top:10%;
+  margin-right: auto;
+  margin-left: auto;
+  font-family: Montserrat, sans-serif;
+}
+
+
+.content{
+  margin:2%;
+}
+
+h1{
+  font-weight: 600;
+  font-family:"Avenir Next", sans-serif;
+}
+
+form{
+  margin: 20px;
+}
+.form-control{
+  margin-bottom: 10px;
+}
+
+.btn{
+  margin-top: 1%;
+  background: #e3e3de;
+  color:#212922;
+}
+
+.btn:hover{
+  color: #e3e3de;
+  background: #264e2b;
+}
+
+.alert{
+  width: fit-content;
+}
+
+
+
+

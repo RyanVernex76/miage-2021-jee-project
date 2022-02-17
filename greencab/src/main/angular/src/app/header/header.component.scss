@@ -1,33 +1,26 @@
-body {
-  font-family: Montserrat, sans-serif;
+.navbar{
+  background-color: #212922;
+  width: 200px;
+  margin-left: 2%;
+  height: 50px;
+  padding:5px;
+  text-align: center;
+  margin-top: 10px;
+  margin-right: auto;
+  border-radius: 40px;
+  box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
 }
 
-.navbar-default {
-  background-color: rgb(16, 16, 16)
-}
+.navbar-brand{
+  font: 30px "Avenir Next", sans-serif;
+  font-style: italic;
+  font-weight: 900;
+  color: #e3e3de;
+  margin-left:17%;
+  text-transform: uppercase;
+  font-style: italic;
+  letter-spacing: 0.03em;
 
-.navbar a {
-  color: white;
-}
-
-.nav {
-  position: fixed;
-}
-
-.white-icon {
-  color: white
-}
-
-.navbar-nav .nav-item:hover, .dropdown-item:hover {
-  background-color: rgba(180, 190, 203, 0.4);
-}
-
-.nav-item {
-  display: flex;
-}
-
-fa-icon {
-  margin-top: 8px;
 }
 
 

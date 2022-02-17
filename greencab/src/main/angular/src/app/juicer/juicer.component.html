@@ -1,13 +1,16 @@
 
 
 <div class="inLine" *ngIf="juicer !== undefined">
-    <div class="profile">
-      <h1>{{juicer.firstName}} {{juicer.lastName}}</h1>
-      <div class="info">
-        <b>Email address :</b> {{juicer.emailAddress}}
-        <br/>
-        <b>Phone number :</b> {{juicer.phone}}
+    <div class="profile-container">
+      <div class="profile">
+        <h1>{{juicer.firstName}} {{juicer.lastName}}</h1>
+        <div class="info">
+          <b>Email address :</b> {{juicer.emailAddress}}
+          <br/>
+          <b>Phone number :</b> {{juicer.phone}}
+        </div>
       </div>
+      <app-user-option [user]="this.juicer" [userType]="'juicer'"></app-user-option>
     </div>
 
     <div class="column">
@@ -21,4 +24,4 @@
       </div>
       </div>
 </div>
-<app-user-option [user]="this.juicer" [userType]="'juicer'"></app-user-option>
+

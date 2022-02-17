@@ -1,0 +1,28 @@
+.card{
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  border-radius: 20px;
+}
+
+.mb-md-5{
+  font-family: "Avenir Next", sans-serif;
+  color: #264e2b;
+}
+
+.form-label{
+  color: #212922;
+  font-family: Montserrat, sans-serif;
+  font-weight: 300;
+}
+
+.btn{
+  color: #212922;
+  background: #e3e3de;
+  font-family: Montserrat, sans-serif;
+  /*margin-left: 38% !important;*/
+  border-color: #212922;
+}
+
+.btn:hover{
+  color: #e3e3de;
+  background: #264e2b;
+}
