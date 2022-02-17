@@ -43,6 +43,10 @@ public class FareGateway {
         return fare;
     }
 
+    public void notifyEmailPassenger(Fare f){
+        this.fareService.sendMailValidation(f);
+    }
+
     public boolean checkFarePossible(Fare f) throws CarNotFoundException {
         AutonomousCar[] cars = carDao.getAvailableCars();
         // return false if no car are available for the fare

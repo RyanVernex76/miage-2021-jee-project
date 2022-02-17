@@ -23,6 +23,9 @@ public class FareServiceImpl implements FareService {
     @Inject
     FareDao fareDao;
 
+    @Inject
+    MailService mailService;
+
 
     @Override
     public Fare register(Fare fare) {
@@ -37,5 +40,10 @@ public class FareServiceImpl implements FareService {
             e.printStackTrace();
         }
         return fare;
+    }
+
+    @Override
+    public void sendMailValidation(Fare f) {
+        this.mailService.sendMailValidationFare(f);
     }
 }

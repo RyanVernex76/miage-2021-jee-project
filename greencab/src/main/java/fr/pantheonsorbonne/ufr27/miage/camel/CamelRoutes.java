@@ -40,7 +40,8 @@ public class CamelRoutes extends RouteBuilder {
 
         // Send fare object to car
         from("direct:bookFare")//
-                .log("fare sent to cars: ${in.headers}")//
+                .log("fare sent to cars")//
+                .bean(fareHandler, "notifyEmailPassenger")
                 .marshal().json()
                 .to("jms:" + jmsPrefix + "bookFare")
         ;
@@ -70,23 +71,13 @@ public class CamelRoutes extends RouteBuilder {
                 .bean(carHandler, "setAvailable").marshal().json()
         ;
 
-
-
-
-
-        /*
         // Receives CarPosition object => notify needRecharge + latest location
-        from("jms:" + jmsPrefix + "recharge")//
+        from("jms:" + jmsPrefix + "carRecharge")//
                 .log("car need recharge: ${in.headers}")//
-                .unmarshal().json(Fare.class)//
-                .bean(carHandler, "notifyRecharge").marshal().json()
-        ;
-
-        from("direct:ticketCancel")
+                .unmarshal().json(CarPosition.class)//
+                .bean(rechargeGateway, "notifyRecharge")
+                .bean(carHandler, "notifyRecharge")
                 .marshal().json()
-                .to("jms:topic:" + jmsPrefix + "cancellation");
-
-
- */
+        ;
     }
 }

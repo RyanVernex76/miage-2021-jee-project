@@ -1,6 +1,10 @@
 package fr.pantheonsorbonne.ufr27.miage.camel.gateways;
 
+import fr.pantheonsorbonne.ufr27.miage.dao.JuicerDao;
+import fr.pantheonsorbonne.ufr27.miage.dto.CarPosition;
 import fr.pantheonsorbonne.ufr27.miage.dto.Recharge;
+import fr.pantheonsorbonne.ufr27.miage.model.Juicer;
+import fr.pantheonsorbonne.ufr27.miage.service.MailService;
 import fr.pantheonsorbonne.ufr27.miage.service.RechargeService;
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
@@ -18,8 +22,23 @@ public class RechargeGateway {
     @Inject
     RechargeService rechargeService;
 
+    @Inject
+    JuicerDao juicerDao;
+
+    @Inject
+    MailService mailService;
+
     public void registerRecharge(Recharge r){
         this.rechargeService.registerRecharge(r);
+    }
+
+
+    public void notifyRecharge(CarPosition car){
+        Juicer[] juicers = this.juicerDao.getJuicers();
+        for (Juicer j : juicers) {
+            System.out.println("send mail to " + j.getEmailAddress());
+            this.mailService.sendNotfifRechargeJuicer(j, car);
+        }
     }
 
     public void sendNewRecharge(fr.pantheonsorbonne.ufr27.miage.model.Recharge r) {
