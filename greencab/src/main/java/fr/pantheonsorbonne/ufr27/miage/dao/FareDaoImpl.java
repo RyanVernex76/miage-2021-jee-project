@@ -8,6 +8,7 @@ import javax.enterprise.context.control.ActivateRequestContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
@@ -21,6 +22,7 @@ public class FareDaoImpl implements FareDao{
     PassengerDao passengerDao;
 
     @Override
+    @Transactional
     public void saveFare(Fare f) {
         em.persist(f);
     }

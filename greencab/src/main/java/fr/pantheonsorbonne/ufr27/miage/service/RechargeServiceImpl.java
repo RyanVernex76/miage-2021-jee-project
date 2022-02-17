@@ -42,7 +42,7 @@ public class RechargeServiceImpl implements RechargeService{
 
             this.rechargeDao.updateFinishedRecharge(rech);
             this.carDao.setNeedRecharge(r.getCarId(), false);
-            this.carDao.setAvailable(r.getCarId());
+            this.carDao.setAvailable(r.getCarId(), true);
             this.carDao.setCarPosition(
                     new CarPosition(r.getCarId(),
                             chargingPointDao.getChargingPoint(r.getChargintPointId()).getAddress()

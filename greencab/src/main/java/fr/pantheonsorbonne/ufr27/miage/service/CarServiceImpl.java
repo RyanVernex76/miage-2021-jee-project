@@ -26,7 +26,7 @@ public class CarServiceImpl implements CarService{
     @Override
     public CarPosition setAvailable(CarPosition car) {
         try{
-            this.carDao.setAvailable(car.getCarId());
+            this.carDao.setAvailable(car.getCarId(), true);
             this.carDao.setCarPosition(car);
         }catch (CarNotFoundException | ElementNotFoundException e){
             System.out.println(e.getMessage());
@@ -36,9 +36,10 @@ public class CarServiceImpl implements CarService{
     }
 
     @Override
-    public CarPosition notifyRecharge(CarPosition car) {
+    public CarPosition initRecharge(CarPosition car) {
         try{
             this.carDao.setNeedRecharge(car.getCarId(), true);
+            this.carDao.setAvailable(car.getCarId(), false);
             this.carDao.setCarPosition(car);
         }catch (CarNotFoundException | ElementNotFoundException e){
             System.out.println(e.getMessage());

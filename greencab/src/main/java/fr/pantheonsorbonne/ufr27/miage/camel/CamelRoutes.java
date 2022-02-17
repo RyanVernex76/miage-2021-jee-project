@@ -51,6 +51,11 @@ public class CamelRoutes extends RouteBuilder {
                 .marshal().json()
                 .to("jms:" + jmsPrefix + "newRecharge");
 
+        // Send CarPosition object to Voiture when recharge is finished
+        from("direct:rechargeFinished")
+                .marshal().json()
+                .to("jms:" + jmsPrefix + "rechargeFinished");
+
 
         // Receives fare from car => Charge passenger
         from("jms:" + jmsPrefix + "fare")//
@@ -59,9 +64,11 @@ public class CamelRoutes extends RouteBuilder {
                 .bean(fareHandler, "register").marshal().json()
         ;
 
+        // Receives recharge from Borne => register it to DB and
         from("jms:" + jmsPrefix + "rechargeDone")
                 .unmarshal().json(Recharge.class)
                 .bean(rechargeGateway, "registerRecharge")
+                .bean(carHandler, "notifyCarRechargeFinished")
                 .marshal().json();
 
         // Receives CarPosition object => register available + latest position
@@ -76,7 +83,7 @@ public class CamelRoutes extends RouteBuilder {
                 .log("car need recharge: ${in.headers}")//
                 .unmarshal().json(CarPosition.class)//
                 .bean(rechargeGateway, "notifyRecharge")
-                .bean(carHandler, "notifyRecharge")
+                .bean(carHandler, "initRecharge")
                 .marshal().json()
         ;
     }

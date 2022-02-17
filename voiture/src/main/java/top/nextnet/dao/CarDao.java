@@ -12,4 +12,8 @@ public interface CarDao {
     Car getCar(int carId) throws CarNotFoundException;
 
     void updateCurrentKm(int carId, int add) throws CarNotFoundException;
+
+    void resetCurrentKm(int carId) throws CarNotFoundException;
+
+    void setPosition(int carId, String newPosition) throws CarNotFoundException;
 }

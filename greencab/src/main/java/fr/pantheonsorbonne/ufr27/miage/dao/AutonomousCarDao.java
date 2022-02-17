@@ -10,7 +10,7 @@ public interface AutonomousCarDao {
 
     AutonomousCar getCar(int carId) throws CarNotFoundException;
 
-    void setAvailable(int carId) throws CarNotFoundException;
+    void setAvailable(int carId, boolean available) throws CarNotFoundException;
 
     void setCarPosition(CarPosition carPos) throws ElementNotFoundException;
 

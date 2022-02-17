@@ -36,7 +36,6 @@ public class RechargeGateway {
     public void notifyRecharge(CarPosition car){
         Juicer[] juicers = this.juicerDao.getJuicers();
         for (Juicer j : juicers) {
-            System.out.println("send mail to " + j.getEmailAddress());
             this.mailService.sendNotfifRechargeJuicer(j, car);
         }
     }

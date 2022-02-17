@@ -39,9 +39,9 @@ public class AutonomousCarDaoImpl implements  AutonomousCarDao{
 
     @Override
     @Transactional
-    public void setAvailable(int carId) throws CarNotFoundException {
+    public void setAvailable(int carId, boolean available) throws CarNotFoundException {
         AutonomousCar car = this.getCar(carId);
-        car.setAvailable(true);
+        car.setAvailable(available);
         em.persist(car);
     }
 

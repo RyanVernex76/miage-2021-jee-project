@@ -6,7 +6,7 @@ public interface CarService {
 
     CarPosition setAvailable(CarPosition car);
 
-    CarPosition notifyRecharge(CarPosition car);
+    CarPosition initRecharge(CarPosition car);
 
     boolean checkDistance(int carId, String dest);
 }

@@ -1,11 +1,13 @@
 package top.nextnet.camel;
 
+import fr.pantheonsorbonne.ufr27.miage.dto.CarPosition;
 import fr.pantheonsorbonne.ufr27.miage.dto.Fare;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import top.nextnet.camel.handler.CarRechargeHandler;
 import top.nextnet.camel.handler.FareHandler;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -18,6 +20,9 @@ public class CamelRoutes extends RouteBuilder {
 
     @Inject
     FareHandler fareHandler;
+
+    @Inject
+    CarRechargeHandler carRechargeHandler;
 
     @Inject
     CamelContext camelContext;
@@ -54,6 +59,12 @@ public class CamelRoutes extends RouteBuilder {
                 .bean(fareHandler, "onFareReceived")
         ;
 
+        // Receive CarPosition object from greenCab ==> reset current km
+        from("jms:" + jmsPrefix + "rechargeFinished")//
+                .log("car is fully recharged")//
+                .unmarshal().json(CarPosition.class)//
+                .bean(carRechargeHandler, "setCarAfterRecharge")
+        ;
 
 
 

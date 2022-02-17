@@ -53,4 +53,30 @@ public class CarDaoImpl implements CarDao{
         car.setCurrentKm(car.getCurrentKm() + add);
         em.persist(car);
     }
+
+    @Override
+    @Transactional
+    public void resetCurrentKm(int carId) throws CarNotFoundException {
+        try{
+            Car c = em.find(Car.class, carId);
+            c.setCurrentKm(0);
+            em.persist(c);
+        }
+        catch (NoResultException e){
+            throw new CarNotFoundException(carId);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void setPosition(int carId, String newPosition) throws CarNotFoundException {
+        try{
+            Car c = em.find(Car.class, carId);
+            c.setCurrentPosition(newPosition);
+            em.persist(c);
+        }
+        catch (NoResultException e){
+            throw new CarNotFoundException(carId);
+        }
+    }
 }
