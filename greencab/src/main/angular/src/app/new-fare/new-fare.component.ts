@@ -13,7 +13,6 @@ import {Fare} from "../../model/Fare";
 export class NewFareComponent implements OnInit {
 
   public response?: Fare;
-  public response2?: any;
 
   public fareForm = this.fb.group({
       location: ['', Validators.required],
@@ -29,8 +28,6 @@ export class NewFareComponent implements OnInit {
     if (this.loginService.currentUser !== undefined){
       let obs: Observable<Fare> = this.greenCabService.bookFare(this.loginService.currentUser.id, input.location);
       this.response = await firstValueFrom(obs);
-	  let obs2: Observable<Object> = this.greenCabService.sendEmail(this.loginService.currentUser.id);
-      this.response2 = await firstValueFrom(obs2);
 	}
   }
 
