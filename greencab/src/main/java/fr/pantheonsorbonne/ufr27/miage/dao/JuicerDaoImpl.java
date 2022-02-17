@@ -1,6 +1,7 @@
 package fr.pantheonsorbonne.ufr27.miage.dao;
 
 import fr.pantheonsorbonne.ufr27.miage.exception.JuicerNotFoundException;
+import fr.pantheonsorbonne.ufr27.miage.exception.PassengerNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.model.Juicer;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -44,5 +45,33 @@ public class JuicerDaoImpl implements JuicerDao{
     public void insertNewJuicer(Juicer j) {
         em.persist(j.getJuicerAccount());
         em.persist(j);
+    }
+
+    @Override
+    @Transactional
+    public void deleteJuicer(int id) throws JuicerNotFoundException {
+        em.createQuery("delete from Recharge r where r.juicer=:id")
+                .setParameter("id", this.getJuicer(id))
+                .executeUpdate();
+        int isSuccessful = em.createQuery("delete from Juicer p where p.id=:id")
+                .setParameter("id", this.getJuicer(id).getId())
+                .executeUpdate();
+        if (isSuccessful == 0){
+            throw new JuicerNotFoundException(id);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void changeJuicerPassword(int id, String newPassword) throws JuicerNotFoundException{
+        try{
+            this.getJuicer(id);
+        } catch(JuicerNotFoundException e){
+            throw e;
+        }
+        em.createQuery("update Juicer p set p.password=:newPassword where p.id=:id")
+                .setParameter("newPassword", newPassword)
+                .setParameter("id", id)
+                .executeUpdate();
     }
 }

@@ -1,5 +1,4 @@
 package fr.pantheonsorbonne.ufr27.miage.model;
-
 import javax.persistence.*;
 
 @Table(name = "Bank_Account")

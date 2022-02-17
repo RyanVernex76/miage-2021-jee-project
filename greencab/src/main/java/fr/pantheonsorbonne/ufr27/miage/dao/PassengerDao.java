@@ -11,4 +11,8 @@ public interface PassengerDao {
 
     void insertNewPassenger(Passenger p);
 
+    void deletePassenger(int id) throws PassengerNotFoundException;
+
+    void changePassengerPassword(int id, String newPassword) throws PassengerNotFoundException;
+
 }

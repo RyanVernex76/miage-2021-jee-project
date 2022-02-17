@@ -14,7 +14,6 @@ public class PassengerResource {
     @Inject
     PassengerDao passengerDao;
 
-
     @Path("/{id}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
@@ -35,5 +34,29 @@ public class PassengerResource {
     public void createPassenger(Passenger p){
         this.passengerDao.insertNewPassenger(p);
     }
+
+    @Path("/{id}")
+    @DELETE
+    @Consumes({MediaType.APPLICATION_JSON})
+    public void deletePassengerAccount(@PathParam("id") int id) {
+        try {
+            this.passengerDao.deletePassenger(id);
+        }
+        catch (PassengerNotFoundException e){
+            throw new WebApplicationException("index invalide ", 404);
+        }
+    }
+
+    @Path("/password/{id}")
+    @PUT
+    @Consumes({MediaType.TEXT_PLAIN})
+    public void changePasseword(@PathParam("id") int id, String newPassword) {
+        try {
+            this.passengerDao.changePassengerPassword(id, newPassword);
+        } catch (PassengerNotFoundException e){
+            throw new WebApplicationException("Invalid id ", 404);
+        }
+    }
+
 
 }
